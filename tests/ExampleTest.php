@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\Skeleton\Tests;
+namespace Nncodes\ZoomMeeting\Tests;
 
 class ExampleTest extends TestCase
 {
