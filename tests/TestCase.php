@@ -3,8 +3,8 @@
 namespace Nncodes\ZoomMeeting\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Orchestra\Testbench\TestCase as Orchestra;
 use Nncodes\ZoomMeeting\ZoomMeetingServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
 {
