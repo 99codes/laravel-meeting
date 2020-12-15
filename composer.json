@@ -1,11 +1,11 @@
 {
-    "name": "nncodes/laravel-zoom-meeting",
-    "description": "Schedule and Join Zoom Meetings with Laravel",
+    "name": "nncodes/laravel-meeting",
+    "description": "Handle any kind of meetings with Laravel",
     "keywords": [
         "nncodes",
-        "laravel-zoom-meeting"
+        "laravel-meeting"
     ],
-    "homepage": "https://github.com/99codes/laravel-zoom-meeting",
+    "homepage": "https://github.com/99codes/laravel-meeting",
     "license": "MIT",
     "authors": [
         {
