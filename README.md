@@ -1,4 +1,4 @@
-# Laravel Zoom Meeting
+# Laravel  Meeting
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/nncodes/laravel-zoom-meeting.svg?style=flat-square)](https://packagist.org/packages/nncodes/laravel-zoom-meeting)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/99codes/laravel-zoom-meeting/run-tests?label=tests)](https://github.com/nncodes/laravel-zoom-meeting/actions?query=workflow%3ATests+branch%3Amaster)
@@ -18,13 +18,13 @@ composer require nncodes/laravel-zoom-meeting
 You can publish and run the migrations with:
 
 ```bash
-php artisan vendor:publish --provider="Nncodes\ZoomMeeting\ZoomMeetingServiceProvider" --tag="migrations"
+php artisan vendor:publish --provider="Nncodes\Meeting\MeetingServiceProvider" --tag="migrations"
 php artisan migrate
 ```
 
 You can publish the config file with:
 ```bash
-php artisan vendor:publish --provider="Nncodes\ZoomMeeting\ZoomMeetingServiceProvider" --tag="config"
+php artisan vendor:publish --provider="Nncodes\Meeting\MeetingServiceProvider" --tag="config"
 ```
 
 This is the contents of the published config file:

@@ -1,12 +1,12 @@
 <?php
 
-namespace Nncodes\ZoomMeeting\Commands;
+namespace Nncodes\Meeting\Commands;
 
 use Illuminate\Console\Command;
 
-class ZoomMeetingCommand extends Command
+class MeetingCommand extends Command
 {
-    public $signature = 'laravel-zoom-meeting';
+    public $signature = 'meeting';
 
     public $description = 'My command';
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Nncodes\ZoomMeeting\Tests;
+namespace Nncodes\Meeting\Tests;
 
 class ExampleTest extends TestCase
 {

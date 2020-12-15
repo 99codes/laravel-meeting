@@ -1,24 +1,24 @@
 <?php
 
-namespace Nncodes\ZoomMeeting;
+namespace Nncodes\Meeting;
 
 use Illuminate\Support\ServiceProvider;
-use Nncodes\ZoomMeeting\Commands\ZoomMeetingCommand;
+use Nncodes\Meeting\Commands\MeetingCommand;
 
-class ZoomMeetingServiceProvider extends ServiceProvider
+class MeetingServiceProvider extends ServiceProvider
 {
     public function boot()
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/laravel-zoom-meeting.php' => config_path('laravel-zoom-meeting.php'),
+                __DIR__ . '/../config/meeting.php' => config_path('meeting.php'),
             ], 'config');
 
             $this->publishes([
-                __DIR__ . '/../resources/views' => base_path('resources/views/vendor/laravel-zoom-meeting'),
+                __DIR__ . '/../resources/views' => base_path('resources/views/vendor/meeting'),
             ], 'views');
 
-            $migrationFileName = 'create_laravel_zoom_meeting_table.php';
+            $migrationFileName = 'create_mettings_table.php';
             if (! $this->migrationFileExists($migrationFileName)) {
                 $this->publishes([
                     __DIR__ . "/../database/migrations/{$migrationFileName}.stub" => database_path('migrations/' . date('Y_m_d_His', time()) . '_' . $migrationFileName),
@@ -26,16 +26,16 @@ class ZoomMeetingServiceProvider extends ServiceProvider
             }
 
             $this->commands([
-                ZoomMeetingCommand::class,
+                MeetingCommand::class,
             ]);
         }
 
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'laravel-zoom-meeting');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'meeting');
     }
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/laravel-zoom-meeting.php', 'laravel-zoom-meeting');
+        $this->mergeConfigFrom(__DIR__ . '/../config/meeting.php', 'meeting');
     }
 
     public static function migrationFileExists(string $migrationFileName): bool

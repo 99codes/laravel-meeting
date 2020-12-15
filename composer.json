@@ -26,13 +26,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Nncodes\\ZoomMeeting\\": "src",
-            "Nncodes\\ZoomMeeting\\Database\\Factories\\": "database/factories"
+            "Nncodes\\Meeting\\": "src",
+            "Nncodes\\Meeting\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Nncodes\\ZoomMeeting\\Tests\\": "tests"
+            "Nncodes\\Meeting\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -46,10 +46,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Nncodes\\ZoomMeeting\\ZoomMeetingServiceProvider"
+                "Nncodes\\Meeting\\MeetingServiceProvider"
             ],
             "aliases": {
-                "ZoomMeeting": "Nncodes\\ZoomMeeting\\ZoomMeetingFacade"
+                "Meeting": "Nncodes\\Meeting\\MeetingFacade"
             }
         }
     },

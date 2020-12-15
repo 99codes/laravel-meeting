@@ -1,9 +1,9 @@
 <?php
 
-namespace Nncodes\ZoomMeeting\Tests;
+namespace Nncodes\Meeting\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Nncodes\ZoomMeeting\ZoomMeetingServiceProvider;
+use Nncodes\Meeting\MeetingServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -13,14 +13,14 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Nncodes\\ZoomMeeting\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'Nncodes\\Meeting\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
     }
 
     protected function getPackageProviders($app)
     {
         return [
-            ZoomMeetingServiceProvider::class,
+            MeetingServiceProvider::class,
         ];
     }
 
@@ -34,7 +34,7 @@ class TestCase extends Orchestra
         ]);
 
         /*
-        include_once __DIR__.'/../database/migrations/create_laravel_zoom_meeting_table.php.stub';
+        include_once __DIR__.'/../database/migrations/create_meetings_table.php.stub';
         (new \CreatePackageTable())->up();
         */
     }

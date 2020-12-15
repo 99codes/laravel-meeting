@@ -1,6 +1,6 @@
 <?php
 
-namespace Nncodes\ZoomMeeting\Database\Factories;
+namespace Nncodes\Meeting\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
