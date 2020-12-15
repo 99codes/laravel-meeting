@@ -1,18 +1,18 @@
-# Laravel  Meeting
+# Laravel Meeting
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/nncodes/laravel-zoom-meeting.svg?style=flat-square)](https://packagist.org/packages/nncodes/laravel-zoom-meeting)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/99codes/laravel-zoom-meeting/run-tests?label=tests)](https://github.com/nncodes/laravel-zoom-meeting/actions?query=workflow%3ATests+branch%3Amaster)
-[![Total Downloads](https://img.shields.io/packagist/dt/nncodes/laravel-zoom-meeting.svg?style=flat-square)](https://packagist.org/packages/nncodes/laravel-zoom-meeting)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/nncodes/laravel-meeting.svg?style=flat-square)](https://packagist.org/packages/nncodes/laravel-meeting)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/99codes/laravel-meeting/run-tests?label=tests)](https://github.com/nncodes/laravel-meeting/actions?query=workflow%3ATests+branch%3Amaster)
+[![Total Downloads](https://img.shields.io/packagist/dt/nncodes/laravel-meeting.svg?style=flat-square)](https://packagist.org/packages/nncodes/laravel-meeting)
 
 
-Schedule and Join Zoom Meetings with Laravel
+Handle any kind of meeting with Laravel
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require nncodes/laravel-zoom-meeting
+composer require nncodes/laravel-meeting
 ```
 
 You can publish and run the migrations with:
