@@ -3,40 +3,40 @@
 namespace Nncodes\Meeting\Providers\Database;
 
 use Carbon\Carbon;
-use Nncodes\Meeting\Contracts\Resource as Contract;
 use Nncodes\Meeting\Contracts\Host;
 use Nncodes\Meeting\Contracts\Presenter;
+use Nncodes\Meeting\Contracts\Resource as Contract;
 use Nncodes\Meeting\Contracts\Scheduler;
 
 class Resource implements Contract
-{  
-   /**
-     * @var \Carbon\Carbon $startTime 
-     */
+{
+    /**
+      * @var \Carbon\Carbon
+      */
     protected Carbon $startTime;
 
     /**
-     * @var int $duration
+     * @var int
      */
     protected int $duration;
 
     /**
-     * @var string $topic
+     * @var string
      */
     protected string $topic;
 
     /**
-     * @var \Nncodes\Meeting\Contracts\Scheduler $scheduler
+     * @var \Nncodes\Meeting\Contracts\Scheduler
      */
     protected Scheduler $scheduler;
 
     /**
-     * @var \Nncodes\Meeting\Contracts\Host $host
+     * @var \Nncodes\Meeting\Contracts\Host
      */
     protected Host $host;
 
     /**
-     * @var \Nncodes\Meeting\Contracts\Presenter $presenter
+     * @var \Nncodes\Meeting\Contracts\Presenter
      */
     protected Presenter $presenter;
 
@@ -54,6 +54,7 @@ class Resource implements Contract
     public function setTopic(string $topic): self
     {
         $this->topic = $topic;
+
         return $this;
     }
 
@@ -66,18 +67,20 @@ class Resource implements Contract
     public function setStartTime(Carbon $startTime): self
     {
         $this->startTime = $startTime;
+
         return $this;
     }
 
     /**
      * Undocumented function
      *
-     * @param integer $minutes
+     * @param int $minutes
      * @return self
      */
     public function setDuration(int $minutes): self
     {
         $this->duration = $minutes;
+
         return $this;
     }
 
@@ -90,6 +93,7 @@ class Resource implements Contract
     public function setScheduler(Scheduler $scheduler): self
     {
         $this->scheduler = $scheduler;
+
         return $this;
     }
 
@@ -102,6 +106,7 @@ class Resource implements Contract
     public function setHost(Host $host): self
     {
         $this->host = $host;
+
         return $this;
     }
 
@@ -114,6 +119,7 @@ class Resource implements Contract
     public function setPresenter(Presenter $presenter): self
     {
         $this->presenter = $presenter;
+
         return $this;
     }
 
@@ -126,6 +132,7 @@ class Resource implements Contract
     public function setProvider(string $provider): self
     {
         $this->provider = $provider;
+
         return $this;
     }
 
@@ -152,7 +159,7 @@ class Resource implements Contract
     /**
      * Undocumented function
      *
-     * @return integer
+     * @return int
      */
     public function duration(): int
     {
@@ -186,7 +193,7 @@ class Resource implements Contract
      */
     public function host(): Host
     {
-        return $this->host;        
+        return $this->host;
     }
 
     /**
@@ -198,5 +205,4 @@ class Resource implements Contract
     {
         return $this->provider;
     }
-
 }

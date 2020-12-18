@@ -3,13 +3,13 @@
 namespace Nncodes\Meeting\Providers\Database;
 
 use Nncodes\Meeting\Contracts\Dispatcher as Contract;
-use Nncodes\Meeting\Contracts\Resource;
 use Nncodes\Meeting\Contracts\Participant;
+use Nncodes\Meeting\Contracts\Resource;
 use Nncodes\Meeting\Models\Meeting;
 use Nncodes\Meeting\Models\Participant as ParticipantModel;
 
 class Dispatcher implements Contract
-{  
+{
     /**
      * Schedule and the meeting by saving the model instance.
      * Call the scheduling and scheduled handler methods just before and after saving
@@ -24,7 +24,7 @@ class Dispatcher implements Contract
             'topic' => $resource->topic(),
             'start_time' => $resource->startTime(),
             'duration' => $resource->duration(),
-            'provider' => $resource->provider()
+            'provider' => $resource->provider(),
         ]);
 
         $meeting->scheduler()->associate($resource->scheduler());
@@ -48,7 +48,6 @@ class Dispatcher implements Contract
      */
     public function scheduling(Meeting $meeting): void
     {
-        
     }
 
     /**
@@ -59,7 +58,6 @@ class Dispatcher implements Contract
      */
     public function scheduled(Meeting $meeting): void
     {
-        
     }
 
     /**
@@ -84,7 +82,7 @@ class Dispatcher implements Contract
 
         $participantPivot = $meeting->participants($morphType)
                 ->wherePivot('uuid', $uuid)
-                ->withPivot(['uuid']) 
+                ->withPivot(['uuid'])
                 ->withTimestamps()
                 ->first();
 
@@ -93,7 +91,7 @@ class Dispatcher implements Contract
         return $participantPivot;
     }
 
-     /**
+    /**
     * Handle the participant model instance before associate
     *
     * @param \Nncodes\Meeting\Contracts\Participant $participant
@@ -101,7 +99,6 @@ class Dispatcher implements Contract
     */
     public function joining(Participant $participant): void
     {
-        
     }
 
     /**
@@ -112,7 +109,5 @@ class Dispatcher implements Contract
      */
     public function joined(ParticipantModel $participant): void
     {
-        
     }
-    
 }

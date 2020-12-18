@@ -3,18 +3,17 @@
 namespace Nncodes\Meeting\Contracts;
 
 use Nncodes\Meeting\Models\Meeting;
-use Nncodes\Meeting\Contracts\Participant;
 use Nncodes\Meeting\Models\Participant as ParticipantModel;
 
 interface Dispatcher
 {
-     /**
-     * Schedule a meeting by saving the model instance.
-     * Call the scheduling and scheduled handler methods just before and after saving
-     *
-     * @param Resource $resource
-     * @return \Nncodes\Meeting\Models\Meeting
-     */
+    /**
+    * Schedule a meeting by saving the model instance.
+    * Call the scheduling and scheduled handler methods just before and after saving
+    *
+    * @param Resource $resource
+    * @return \Nncodes\Meeting\Models\Meeting
+    */
     public function schedule(Resource $resource): Meeting;
 
     /**
@@ -43,12 +42,12 @@ interface Dispatcher
     */
     public function join(Meeting $meeting, Participant $participant): Participant;
 
-   /**
-    * Handle the participant model instance before associate
-    *
-    * @param \Nncodes\Meeting\Contracts\Participant $participant
-    * @return void
-    */
+    /**
+     * Handle the participant model instance before associate
+     *
+     * @param \Nncodes\Meeting\Contracts\Participant $participant
+     * @return void
+     */
     public function joining(Participant $participant): void;
 
     /**
@@ -58,5 +57,4 @@ interface Dispatcher
      * @return void
      */
     public function joined(ParticipantModel $participant): void;
-   
 }

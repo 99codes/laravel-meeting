@@ -3,12 +3,9 @@
 namespace Nncodes\Meeting\Providers\Database;
 
 use Nncodes\Meeting\Contracts\Provider as Contract;
-use Nncodes\Meeting\Providers\Database\Dispatcher;
-use Nncodes\Meeting\Providers\Database\Resource;
 
 class Provider implements Contract
-{  
-    
+{
     /**
      * Get the registered name of the component.
      *
@@ -29,7 +26,7 @@ class Provider implements Contract
         return new Resource;
     }
 
-     /**
+    /**
     * Get a new dispatcher instance
     *
     * @return \Nncodes\Meeting\Providers\Database\Dispatcher

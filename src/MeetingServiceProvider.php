@@ -15,7 +15,6 @@ class MeetingServiceProvider extends ServiceProvider
     public function boot()
     {
         if ($this->app->runningInConsole()) {
-
             $this->publishes([
                 __DIR__ . '/../config/meeting.php' => config_path('meeting.php'),
             ], 'config');
@@ -25,7 +24,7 @@ class MeetingServiceProvider extends ServiceProvider
             ], 'views');
 
             $migrationFileName = 'create_meetings_table.php';
-            if (!$this->migrationFileExists($migrationFileName)) {
+            if (! $this->migrationFileExists($migrationFileName)) {
                 $this->publishes([
                     __DIR__ . "/../database/migrations/{$migrationFileName}.stub" => database_path('migrations/' . date('Y_m_d_His', time()) . '_' . $migrationFileName),
                 ], 'migrations');
@@ -61,7 +60,7 @@ class MeetingServiceProvider extends ServiceProvider
      * Undocumented function
      *
      * @param string $migrationFileName
-     * @return boolean
+     * @return bool
      */
     public static function migrationFileExists(string $migrationFileName): bool
     {

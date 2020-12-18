@@ -17,19 +17,19 @@ class Meeting extends Model
      */
     protected $fillable = [
         'uuid',
-        'topic', 
+        'topic',
         'start_time',
         'duration',
         'started_at',
         'ended_at',
-        'provider'
+        'provider',
     ];
 
-     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
+    /**
+    * The attributes that should be cast to native types.
+    *
+    * @var array
+    */
     protected $casts = [
         'start_time' => 'datetime',
         'started_at' => 'datetime',
@@ -47,11 +47,11 @@ class Meeting extends Model
         'presenter_type', 'presenter_id',
     ];
 
-     /**
-     * The relationships that should always be loaded.
-     *
-     * @var array
-     */
+    /**
+    * The relationships that should always be loaded.
+    *
+    * @var array
+    */
     protected $with = ['scheduler', 'presenter', 'host'];
 
     /**
@@ -104,9 +104,8 @@ class Meeting extends Model
      */
     public function provider(): ?LaravelMeeting
     {
-        if( !is_null($this->provider) ){
+        if (! is_null($this->provider)) {
             return MeetingFacade::provider($this->provider);
         }
     }
-    
 }

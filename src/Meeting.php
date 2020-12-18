@@ -16,7 +16,7 @@ class Meeting
 {
     /**
      * Meeting provider class
-     * 
+     *
      * @var \Nncodes\Meeting\Contracts\Provider
      */
     protected Provider $provider;
@@ -40,6 +40,7 @@ class Meeting
     public function provider(string $facadeAccessor): self
     {
         $this->provider = resolve("laravel-meeting:{$facadeAccessor}");
+
         return $this;
     }
 
@@ -47,8 +48,8 @@ class Meeting
      * Create a new meeting
      *
      * @param string $topic
-     * @param \Carbon\Carbon $startTime 
-     * @param integer $duration duration in minutes
+     * @param \Carbon\Carbon $startTime
+     * @param int $duration duration in minutes
      * @param \Nncodes\Meeting\Contracts\Scheduler $scheduler
      * @param \Nncodes\Meeting\Contracts\Presenter $presenter
      * @param \Nncodes\Meeting\Contracts\Host $host
@@ -61,7 +62,7 @@ class Meeting
         Scheduler $scheduler,
         Presenter $presenter,
         Host $host
-    ){
+    ) {
         $resource = $this->provider
             ->resource()
             ->setTopic($topic)
@@ -88,12 +89,12 @@ class Meeting
         return MeetingModel::where(['uuid' => $uuid])->first();
     }
 
-   /**
-    * Find a meeting record by id
-    *
-    * @param integer $id
-    * @return \Nncodes\Meeting\Models\Meeting|null
-    */
+    /**
+     * Find a meeting record by id
+     *
+     * @param int $id
+     * @return \Nncodes\Meeting\Models\Meeting|null
+     */
     public function findById(int $id): ?MeetingModel
     {
         return MeetingModel::find($id);
@@ -107,7 +108,7 @@ class Meeting
      */
     public function getCollection(?string $provider = null): Collection
     {
-        if($provider){
+        if ($provider) {
             return MeetingModel::where('provider', $provider)->get();
         }
 
@@ -117,16 +118,15 @@ class Meeting
     /**
      * Undocumented function
      *
-     * @param integer $meetingId
+     * @param int $meetingId
      * @param \Nncodes\Meeting\Contracts\Participant $participant
      * @return \Nncodes\Meeting\Models\Participant
      */
     public function addParticipant(int $meetingId, ParticipantContract $participant): Participant
-    {       
-        if($meeting = $this->findById($meetingId)){
+    {
+        if ($meeting = $this->findById($meetingId)) {
             return $this->provider->dispatcher()->join($meeting, $participant)->pivot;
         }
-        //Lançar uma exceção.        
+        //Lançar uma exceção.
     }
-    
 }

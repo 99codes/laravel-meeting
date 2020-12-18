@@ -33,5 +33,4 @@ interface Resource
     public function host(): Host;
 
     public function provider(): string;
-
 }
