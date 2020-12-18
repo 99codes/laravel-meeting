@@ -12,19 +12,34 @@ class CreateMeetingsTable extends Migration
             $table->bigIncrements('id');
 
             $table->uuid('uuid');
-
-            $table->string('topic', );
+            $table->string('topic');
             $table->dateTime('start_time');
             $table->integer('duration');
 
             $table->dateTime('started_at')->nullable();
             $table->dateTime('ended_at')->nullable();
 
-            $table->string('channel')->default('default');
+            $table->string('provider');
 
             $table->morphs('scheduler');
-            $table->morphs('place');
-            $table->morphs('host');          
+            $table->morphs('presenter');
+            $table->morphs('host');
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::create('meeting_participants', function (Blueprint $table) {
+
+            $table->uuid('uuid');
+            $table->dateTime('started_at')->nullable();
+            $table->dateTime('ended_at')->nullable();
+
+            $table->morphs('participant');
+            $table->unsignedBigInteger('meeting_id');
+            $table->primary(['participant_id', 'participant_type', 'meeting_id'], 'meeting_participant_primary_key');
+
+            $table->foreign('meeting_id')->references('id')->on('meetings')->onDelete('cascade');
 
             $table->timestamps();
             $table->softDeletes();
