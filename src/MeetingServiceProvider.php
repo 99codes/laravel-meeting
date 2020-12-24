@@ -34,15 +34,12 @@ class MeetingServiceProvider extends ServiceProvider
                 MeetingCommand::class,
             ]);
         }
+
+        //binds
+        foreach(config('meeting.providers', []) as $key => $target){
+            $this->app->bind('laravel-meeting:' .$key, $target);
+        }
         
-        //Set the default provider in the config file.
-        $this->app->when([\Nncodes\Meeting\Meeting::class])
-            ->needs(\Nncodes\Meeting\Contracts\Provider::class)
-            ->give(\Nncodes\Meeting\Providers\Database\Provider::class);
-
-        //TODO: set the provider in the config file.
-        $this->app->bind('laravel-meeting:database', \Nncodes\Meeting\Providers\Database\Provider::class);
-
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'meeting');
     }
 

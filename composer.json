@@ -17,7 +17,8 @@
     ],
     "require": {
         "php": "^7.2.5|^7.3|^8.0",
-        "illuminate/contracts": "^6.0|^7.0|^8.0"
+        "illuminate/contracts": "^6.0|^7.0|^8.0",
+        "nncodes/laravel-meta-attributes": "^1.0"
     },
     "require-dev": {
         "orchestra/testbench": "^4.0|^5.0|^6.0",
@@ -47,10 +48,7 @@
         "laravel": {
             "providers": [
                 "Nncodes\\Meeting\\MeetingServiceProvider"
-            ],
-            "aliases": {
-                "Meeting": "Nncodes\\Meeting\\MeetingFacade"
-            }
+            ]
         }
     },
     "minimum-stability": "dev",

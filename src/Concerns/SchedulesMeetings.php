@@ -3,8 +3,12 @@
 namespace Nncodes\Meeting\Concerns;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Nncodes\Meeting\Models\Meeting as MeetingModel;
+use Nncodes\Meeting\MeetingAdder;
+use Nncodes\Meeting\Models\Meeting;
 
+/**
+ * Provides default implementation of Scheduler contract.
+ */
 trait SchedulesMeetings
 {
     /**
@@ -14,6 +18,18 @@ trait SchedulesMeetings
      */
     public function meetings(): MorphMany
     {
-        return $this->morphMany(MeetingModel::class, 'scheduler')->with('presenter', 'host');
+        return $this->morphMany(Meeting::class, 'scheduler')->with('presenter', 'host');
     }
+
+    /**
+     * Undocumented function
+     *
+     * @param string|null $provider
+     * @return \Nncodes\Meeting\MeetingAdder
+     */   
+    public function scheduleMeeting(?string $provider = null): MeetingAdder
+    {
+        return app(MeetingAdder::class)->withProvider($provider)->scheduledBy($this);
+    }
+
 }

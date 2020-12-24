@@ -5,6 +5,9 @@ namespace Nncodes\Meeting\Concerns;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Nncodes\Meeting\Models\Meeting;
 
+/**
+ * Provides default implementation of Presenter contract.
+ */
 trait PresentsMeetings
 {
     /**
@@ -16,4 +19,5 @@ trait PresentsMeetings
     {
         return $this->morphMany(Meeting::class, 'presenter')->with('scheduler', 'host');
     }
+
 }

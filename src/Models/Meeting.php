@@ -3,13 +3,19 @@
 namespace Nncodes\Meeting\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Nncodes\Meeting\Meeting as LaravelMeeting;
-use Nncodes\Meeting\MeetingFacade;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Nncodes\MetaAttributes\Concerns\HasMetaAttributes;
 
 class Meeting extends Model
 {
+    use SoftDeletes;
+    use HasMetaAttributes;
+    use Traits\QueriesMeeting;
+    use Traits\DefinesMeetingRelationship;
+    use Traits\ManipulatesParticipants;
+    use Traits\ProvidesMeetingAccessors;
+    use Traits\ManipulatesMeeting;
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -53,59 +59,5 @@ class Meeting extends Model
     * @var array
     */
     protected $with = ['scheduler', 'presenter', 'host'];
-
-    /**
-     * Get the MorphTo Relation with the scheduler models
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
-     */
-    public function scheduler(): MorphTo
-    {
-        return $this->morphTo();
-    }
-
-    /**
-     * Get the MorphTo Relation with the host model
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
-     */
-    public function host(): MorphTo
-    {
-        return $this->morphTo();
-    }
-
-    /**
-     * Get the MorphTo Relation with the presenter models
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
-     */
-    public function presenter(): MorphTo
-    {
-        return $this->morphTo();
-    }
-
-    /**
-     * Get the MorphToMany Relation with the participant models
-     *
-     * @param string $modelType
-     * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
-     */
-    public function participants(string $modelType): MorphToMany
-    {
-        return $this->morphedByMany($modelType, 'participant', 'meeting_participants')
-                    ->using(Participant::class)
-                    ->withPivot('uuid');
-    }
-
-    /**
-     * Get the provider instance for current record
-     *
-     * @return \Nncodes\Meeting\Meeting|null
-     */
-    public function provider(): ?LaravelMeeting
-    {
-        if (! is_null($this->provider)) {
-            return MeetingFacade::provider($this->provider);
-        }
-    }
+ 
 }

@@ -5,6 +5,9 @@ namespace Nncodes\Meeting\Concerns;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Nncodes\Meeting\Models\Meeting;
 
+/**
+ * Provides default implementation of Host contract.
+ */
 trait HostsMeetings
 {
     /**
