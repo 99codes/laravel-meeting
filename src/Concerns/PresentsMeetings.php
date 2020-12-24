@@ -19,5 +19,4 @@ trait PresentsMeetings
     {
         return $this->morphMany(Meeting::class, 'presenter')->with('scheduler', 'host');
     }
-
 }

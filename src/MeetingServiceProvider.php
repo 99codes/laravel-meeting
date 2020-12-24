@@ -36,7 +36,7 @@ class MeetingServiceProvider extends ServiceProvider
         }
 
         //binds
-        foreach(config('meeting.providers', []) as $key => $target){
+        foreach (config('meeting.providers', []) as $key => $target) {
             $this->app->bind('laravel-meeting:' .$key, $target);
         }
         

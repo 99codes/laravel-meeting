@@ -13,12 +13,12 @@ use Nncodes\Meeting\MeetingAdder;
  */
 trait ManipulatesMeeting
 {
-     /**
-     * Undocumented function
-     *
-     * @param string|null $provider
-     * @return \Nncodes\Meeting\MeetingAdder
-     */   
+    /**
+    * Undocumented function
+    *
+    * @param string|null $provider
+    * @return \Nncodes\Meeting\MeetingAdder
+    */
     public static function schedule(?string $provider = null): MeetingAdder
     {
         return app(MeetingAdder::class)->withProvider($provider);
@@ -33,6 +33,7 @@ trait ManipulatesMeeting
     public function updateTopic(string $topic): self
     {
         $this->topic = $topic;
+
         return $this;
     }
 
@@ -46,11 +47,12 @@ trait ManipulatesMeeting
     {
         $now = now();
 
-        if($startTime->lessThanOrEqualTo($now)){
-           //@todo exception startTime cannot be less than now
+        if ($startTime->lessThanOrEqualTo($now)) {
+            //@todo exception startTime cannot be less than now
         }
 
         $this->start_time = $startTime;
+
         return $this;
     }
 
@@ -63,6 +65,7 @@ trait ManipulatesMeeting
     public function updateDuration(int $duration): self
     {
         $this->duration = $duration;
+
         return $this;
     }
 
@@ -89,6 +92,7 @@ trait ManipulatesMeeting
     public function updatePresenter(Presenter $presenter): self
     {
         $this->presenter()->associate($presenter);
+
         return $this;
     }
 
@@ -101,14 +105,15 @@ trait ManipulatesMeeting
     public function updateScheduler(Scheduler $scheduler): self
     {
         $this->scheduler()->associate($scheduler);
+
         return $this;
     }
 
-   /**
-    * Undocumented function
-    *
-    * @return self
-    */
+    /**
+     * Undocumented function
+     *
+     * @return self
+     */
     public function start(): self
     {
         $this->instance->starting($this);
@@ -141,7 +146,7 @@ trait ManipulatesMeeting
     /**
      * Undocumented function
      *
-     * @return boolean
+     * @return bool
      */
     public function cancel(): bool
     {
@@ -162,17 +167,16 @@ trait ManipulatesMeeting
      */
     public function save(array $options = [])
     {
-        if($this->exists){
+        if ($this->exists) {
             $this->instance->updating($this);
         }
 
         $saved = parent::save($options);
 
-        if($this->exists){
+        if ($this->exists) {
             $this->instance->updated($this);
         }
 
         return $saved;
     }
-
 }

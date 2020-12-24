@@ -14,12 +14,11 @@ interface Scheduler
      */
     public function meetings(): MorphMany;
 
-     /**
-     * Undocumented function
-     *
-     * @param string|null $provider
-     * @return \Nncodes\Meeting\MeetingAdder
-     */   
+    /**
+    * Undocumented function
+    *
+    * @param string|null $provider
+    * @return \Nncodes\Meeting\MeetingAdder
+    */
     public function scheduleMeeting(?string $provider = null): MeetingAdder;
-
 }

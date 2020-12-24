@@ -59,5 +59,4 @@ class Meeting extends Model
     * @var array
     */
     protected $with = ['scheduler', 'presenter', 'host'];
- 
 }

@@ -16,8 +16,8 @@ trait ProvidesMeetingAccessors
      */
     public function getInstanceAttribute(): Provider
     {
-        if (!config('meeting.providers.' . $this->provider)) {
-            throw \Nncodes\Meeting\Exceptions\InvalidProvider::create( $this->provider);
+        if (! config('meeting.providers.' . $this->provider)) {
+            throw \Nncodes\Meeting\Exceptions\InvalidProvider::create($this->provider);
         }
 
         return resolve("laravel-meeting:{$this->provider}");
@@ -26,12 +26,12 @@ trait ProvidesMeetingAccessors
     /**
      * Undocumented function
      *
-     * @return integer|null
+     * @return int|null
      */
     public function getRealDurationAttribute(): ?int
     {
-        if( $this->started_at && $this->ended_at ){
+        if ($this->started_at && $this->ended_at) {
             return $this->started_at->diffInMinutes($this->ended_at);
-        }        
+        }
     }
 }

@@ -46,5 +46,4 @@ interface Participant
     * @return \Nncodes\Meeting\Models\Participant
     */
     public function leaveMeeting(Meeting $meeting): ParticipantPivot;
-    
 }

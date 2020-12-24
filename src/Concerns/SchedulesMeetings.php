@@ -26,10 +26,9 @@ trait SchedulesMeetings
      *
      * @param string|null $provider
      * @return \Nncodes\Meeting\MeetingAdder
-     */   
+     */
     public function scheduleMeeting(?string $provider = null): MeetingAdder
     {
         return app(MeetingAdder::class)->withProvider($provider)->scheduledBy($this);
     }
-
 }

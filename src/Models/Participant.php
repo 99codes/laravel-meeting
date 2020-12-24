@@ -25,11 +25,11 @@ class Participant extends MorphPivot
         'ended_at' => 'datetime',
     ];
 
-  /**
-   * Undocumented function
-   *
-   * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-   */
+    /**
+     * Undocumented function
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function meeting(): BelongsTo
     {
         return $this->belongsTo(Meeting::class);

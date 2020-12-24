@@ -61,6 +61,7 @@ class MeetingAdder
     public function withTopic(string $topic): self
     {
         $this->topic = $topic;
+
         return $this;
     }
 
@@ -74,11 +75,12 @@ class MeetingAdder
     {
         $now = now();
 
-        if($startTime->lessThanOrEqualTo($now)){
-           //@todo exception startTime cannot be less than now
+        if ($startTime->lessThanOrEqualTo($now)) {
+            //@todo exception startTime cannot be less than now
         }
 
         $this->startTime = $startTime;
+
         return $this;
     }
 
@@ -91,6 +93,7 @@ class MeetingAdder
     public function during(int $minutes): self
     {
         $this->duration = $minutes;
+
         return $this;
     }
 
@@ -103,6 +106,7 @@ class MeetingAdder
     public function scheduledBy(Scheduler $scheduler): self
     {
         $this->scheduler = $scheduler;
+
         return $this;
     }
 
@@ -115,6 +119,7 @@ class MeetingAdder
     public function hostedBy(Host $host): self
     {
         $this->host = $host;
+
         return $this;
     }
 
@@ -127,6 +132,7 @@ class MeetingAdder
     public function presentedBy(Presenter $presenter): self
     {
         $this->presenter = $presenter;
+
         return $this;
     }
 
@@ -140,13 +146,14 @@ class MeetingAdder
     {
         $provider = $provider ? $provider : config('meeting.default');
 
-        if (!config('meeting.providers.' . $provider)) {
+        if (! config('meeting.providers.' . $provider)) {
             throw \Nncodes\Meeting\Exceptions\InvalidProvider::create($provider);
         }
 
         $provider = resolve("laravel-meeting:{$provider}");
 
         $this->provider = $provider;
+
         return $this;
     }
 
@@ -180,7 +187,7 @@ class MeetingAdder
             'topic' => $this->topic,
             'start_time' => $this->startTime,
             'duration' => $this->duration,
-            'provider' => $this->provider->getFacadeAccessor()
+            'provider' => $this->provider->getFacadeAccessor(),
         ]);
 
         $meeting->scheduler()->associate($this->scheduler);
@@ -189,7 +196,7 @@ class MeetingAdder
 
         $meeting->save();
 
-        foreach( $this->metaAttributes as $key => $value ){
+        foreach ($this->metaAttributes as $key => $value) {
             $meeting->setMetaAttribute($key, $value);
         }
 

@@ -65,5 +65,4 @@ trait DefinesMeetingRelationship
     {
         return $this->hasMany(Participant::class);
     }
-
 }

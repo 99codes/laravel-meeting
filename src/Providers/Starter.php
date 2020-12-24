@@ -10,7 +10,6 @@ use Nncodes\Meeting\Models\Participant as ParticipantPivot;
 
 class Starter implements Provider
 {
-
     /**
      * Undocumented function
      *
@@ -30,7 +29,7 @@ class Starter implements Provider
     public function scheduling(MeetingAdder $meeting): void
     {
         $meeting->withMetaAttributes([
-            __METHOD__ => now()->format('Y-m-d H:i:s')
+            __METHOD__ => now()->format('Y-m-d H:i:s'),
         ]);
     }
 
@@ -135,7 +134,7 @@ class Starter implements Provider
 
     /**
      * Undocumented function
-     * 
+     *
      * @param \Nncodes\Meeting\Contracts\Participant $participant
      * @param \Nncodes\Meeting\Models\Meeting $meeting
      * @return void

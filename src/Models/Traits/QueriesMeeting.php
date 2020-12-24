@@ -14,7 +14,6 @@ use Nncodes\Meeting\Contracts\Scheduler;
  */
 trait QueriesMeeting
 {
-
     /**
      * Undocumented function
      *
@@ -31,7 +30,7 @@ trait QueriesMeeting
      * Undocumented function
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param integer $id
+     * @param int $id
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeById(Builder $query, int $id): Builder
@@ -49,9 +48,9 @@ trait QueriesMeeting
     public function scopeScheduler(Builder $query, Scheduler $scheduler): Builder
     {
         return $query->whereHasMorph(
-            'scheduler', 
-            get_class($scheduler),  
-            fn(Builder $query) => $query->where('id', $scheduler->id)
+            'scheduler',
+            get_class($scheduler),
+            fn (Builder $query) => $query->where('id', $scheduler->id)
         );
     }
 
@@ -65,9 +64,9 @@ trait QueriesMeeting
     public function scopePresenter(Builder $query, Presenter $presenter): Builder
     {
         return $query->whereHasMorph(
-            'presenter', 
-            get_class($presenter),  
-            fn(Builder $query) => $query->where('id', $presenter->id)
+            'presenter',
+            get_class($presenter),
+            fn (Builder $query) => $query->where('id', $presenter->id)
         );
     }
 
@@ -81,9 +80,9 @@ trait QueriesMeeting
     public function scopeHost(Builder $query, Host $host): Builder
     {
         return $query->whereHasMorph(
-            'host', 
-            get_class($host),  
-            fn(Builder $query) => $query->where('id', $host->id)
+            'host',
+            get_class($host),
+            fn (Builder $query) => $query->where('id', $host->id)
         );
     }
 
@@ -97,9 +96,9 @@ trait QueriesMeeting
     public function scopeParticipant(Builder $query, Participant $participant): Builder
     {
         return $query->whereHas(
-            'participantsPivot', 
-            fn(Builder $query) => $query->where([
-                'participant_id' =>  $participant->id
+            'participantsPivot',
+            fn (Builder $query) => $query->where([
+                'participant_id' => $participant->id,
             ])
         );
     }
@@ -116,7 +115,7 @@ trait QueriesMeeting
     {
         return $query->whereBetween('start_time', [
             $start->format('Y-m-d H:i:s'),
-            $end->format('Y-m-d H:i:s')
+            $end->format('Y-m-d H:i:s'),
         ]);
     }
 
@@ -154,7 +153,7 @@ trait QueriesMeeting
      */
     public function scopeProvider(Builder $query, string $provider): Builder
     {
-        if(config('meeting.providers.' . $provider)){
+        if (config('meeting.providers.' . $provider)) {
             return $query->where('provider', $provider);
         }
 

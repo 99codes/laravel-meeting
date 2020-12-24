@@ -2,7 +2,6 @@
 
 namespace Nncodes\Meeting\Exceptions;
 
-
 class InvalidProvider extends \Exception
 {
 
@@ -33,14 +32,13 @@ class InvalidProvider extends \Exception
     public function __construct(string $message, string $provider)
     {
         $this->message = sprintf(
-            $message, 
-            $provider, 
+            $message,
+            $provider,
             config_path('meeting')
         );
 
         $this->provider = $provider;
     }
-
    
     /**
      * Get the not found provider name

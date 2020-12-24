@@ -24,7 +24,7 @@ class ParticipantAlreadyAdded extends \Exception
     {
         return new static(
             'The provided participant `%s:%d` is already registered in `%s:%d`',
-            $participant, 
+            $participant,
             $meeting
         );
     }
@@ -39,8 +39,8 @@ class ParticipantAlreadyAdded extends \Exception
     public function __construct(string $message, Participant $participant, Meeting $meeting)
     {
         $this->message = sprintf(
-            $message, 
-            get_class($participant), 
+            $message,
+            get_class($participant),
             $participant->id,
             $meeting->getMorphClass(),
             $meeting->id
@@ -53,7 +53,7 @@ class ParticipantAlreadyAdded extends \Exception
     /**
      * Get the meeting id
      *
-     * @return integer
+     * @return int
      */
     public function getMeetingId(): int
     {

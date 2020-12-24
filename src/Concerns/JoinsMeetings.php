@@ -35,23 +35,23 @@ trait JoinsMeetings
         return $meeting->addParticipant($this);
     }
 
-   /**
-    * Undocumented function
-    *
-    * @param \Nncodes\Meeting\Models\Meeting $meeting
-    * @return bool
-    */
+    /**
+     * Undocumented function
+     *
+     * @param \Nncodes\Meeting\Models\Meeting $meeting
+     * @return bool
+     */
     public function cancelMeetingParticipation(Meeting $meeting): bool
     {
         return $meeting->cancelParticipation($this);
     }
 
-   /**
-    * Undocumented function
-    *
-    * @param \Nncodes\Meeting\Models\Meeting $meeting
-    * @return \Nncodes\Meeting\Models\Participant
-    */
+    /**
+     * Undocumented function
+     *
+     * @param \Nncodes\Meeting\Models\Meeting $meeting
+     * @return \Nncodes\Meeting\Models\Participant
+     */
     public function joinMeeting(Meeting $meeting): Participant
     {
         return $meeting->joinParticipant($this);
@@ -67,5 +67,4 @@ trait JoinsMeetings
     {
         return $meeting->leaveParticipant($this);
     }
-
 }
