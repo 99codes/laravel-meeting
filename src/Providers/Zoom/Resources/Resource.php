@@ -57,16 +57,15 @@ class Resource
     public function fill(): void
     {
         foreach ($this->attributes as $key => $value) {
-
             $camelKey = \Illuminate\Support\Str::camel($key);
            
-            if( is_array($value) && property_exists($this, $camelKey) ){
-                
+            if (is_array($value) && property_exists($this, $camelKey)) {
                 $property = new ReflectionProperty($this, $camelKey);
 
-                if( optional($property->getType())->getName() === Repository::class ){
-                    if( $castingKey = $this->casts[$key] ?? false ){
+                if (optional($property->getType())->getName() === Repository::class) {
+                    if ($castingKey = $this->casts[$key] ?? false) {
                         $this->{$camelKey} = $this->transformCollection($value, $castingKey);
+
                         continue;
                     }
                 }
@@ -75,7 +74,6 @@ class Resource
             $this->{$camelKey} = $value;
         }
     }
-
   
     /**
      * Transform the items of the collection to the given class.
@@ -93,5 +91,4 @@ class Resource
 
         return new Repository($resources, $extraData);
     }
-
 }

@@ -128,7 +128,7 @@ trait MakesHttpRequests
     protected function handleRequestError(ResponseInterface $response): Exception
     {
         $body = json_decode((string) $response->getBody());
-        $statusCode = $response->getStatusCode(); 
+        $statusCode = $response->getStatusCode();
 
         $exceptionsHandler = [
             400 => $body->code == 300 ? ValidationException::class: FailedActionException::class,
@@ -138,7 +138,7 @@ trait MakesHttpRequests
             429 => TooManyRequestsException::class,
         ];
 
-        if( array_key_exists($statusCode, $exceptionsHandler) ){
+        if (array_key_exists($statusCode, $exceptionsHandler)) {
             return new $exceptionsHandler[$statusCode]($body, $statusCode);
         }
         

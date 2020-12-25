@@ -167,12 +167,13 @@ trait ManipulatesMeeting
      */
     public function save(array $options = [])
     {
-        if($updating = $this->exists){
+        if ($updating = $this->exists) {
             $this->instance->updating($this);
         }
 
-        if($saved = parent::save($options) && $updating){
+        if ($saved = parent::save($options) && $updating) {
             $this->instance->updated($this);
+
             return $saved;
         }
 

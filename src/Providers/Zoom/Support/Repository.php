@@ -2,7 +2,6 @@
 
 namespace Nncodes\Meeting\Providers\Zoom\Support;
 
-use Closure;
 use Exception;
 use Illuminate\Support\Collection;
 use ReflectionClass;
@@ -11,52 +10,52 @@ class Repository
 {
 
      /**
-	 * @var \Illuminate\Support\Collection
-	 */
+     * @var \Illuminate\Support\Collection
+     */
     protected Collection $collection;
 
     /**
-	 * @var \ReflectionClass
-	 */
+     * @var \ReflectionClass
+     */
     protected ReflectionClass $reflection;
 
     /**
-	 * @var string
-	 */
+     * @var string
+     */
     protected string $key;
 
     /**
-	 * The number of pages returned for the request made.
-	 * @var int
-	 */
-	public int $pageCount;
-
-	/**
-	 * The page number of the current results.
-	 * @var int
-	 */
-	public int $pageNumber;
-
-	/**
-	 * The number of records returned with a single API call.
-	 * @var int
-	 */
-	public int $pageSize;
-
-	/**
-	 * The total number of all the records available across pages.
-	 * @var int
-	 */
-	public int $totalRecords;
-
-	/**
-	 * The next page token is used to paginate through large result sets. A next page token will be returned whenever the set of available results exceeds the current page size. The expiration period for this token is 15 minutes.
-	 * @var string
-	 */
-	public string $nextPageToken;
+     * The number of pages returned for the request made.
+     * @var int
+     */
+    public int $pageCount;
 
     /**
-     * 
+     * The page number of the current results.
+     * @var int
+     */
+    public int $pageNumber;
+
+    /**
+     * The number of records returned with a single API call.
+     * @var int
+     */
+    public int $pageSize;
+
+    /**
+     * The total number of all the records available across pages.
+     * @var int
+     */
+    public int $totalRecords;
+
+    /**
+     * The next page token is used to paginate through large result sets. A next page token will be returned whenever the set of available results exceeds the current page size. The expiration period for this token is 15 minutes.
+     * @var string
+     */
+    public string $nextPageToken;
+
+    /**
+     *
      * @var mixed
      */
     protected $paginator;
@@ -69,7 +68,7 @@ class Repository
      * @param string|null $key
      */
     public function __construct(array $items, array $attributes = [], ?string $key)
-    {        
+    {
         $this->reflection = new ReflectionClass(Collection::class);
         $this->build($items, $attributes, $key);
     }
@@ -82,14 +81,14 @@ class Repository
      * @param string|null $key
      * @return void
      */
-    protected function build( array $items, array $attributes = [], ?string $key ): void
+    protected function build(array $items, array $attributes = [], ?string $key): void
     {
         $this->key = $key ? $key : 'collection';
         
         $this->createCollection($items);
 
         foreach ($attributes as $key => $value) {
-            $key =  \Illuminate\Support\Str::camel($key);
+            $key = \Illuminate\Support\Str::camel($key);
             $this->{$key} = $value;
         }
     }
@@ -128,7 +127,6 @@ class Repository
         $this->reflection = null;
     }
 
-
     /**
      * Undocumented function
      *
@@ -148,7 +146,7 @@ class Repository
      */
     public function nextPage(): self
     {
-        if(empty($this->nextPageToken) || !$paginator = $this->paginator){
+        if (empty($this->nextPageToken) || ! $paginator = $this->paginator) {
             return $this;
             //@todo Exception
         }
@@ -158,12 +156,12 @@ class Repository
             'page_size' => $this->pageSize,
         ];
         
-        $repository =  $paginator($query, $this->paginator);
+        $repository = $paginator($query, $this->paginator);
 
         $this->pageNumber++;
         
         $this->build($repository->collection()->all(), [
-            'next_page_token' => $repository->nextPageToken
+            'next_page_token' => $repository->nextPageToken,
         ], $this->key);
         
         return $this;
@@ -178,10 +176,10 @@ class Repository
      */
     public function __call(string $name, array $arguments)
     {
-        if( $this->reflection->hasMethod($name) === false ){
+        if ($this->reflection->hasMethod($name) === false) {
             throw new Exception(sprintf("Call undefined function '%s' in '%s'", $name, $this->reflection->getName()));
         }
               
-        return $arguments ? call_user_func_array( [$this->{$this->key}, $name], $arguments ) : $this->{$this->key}->$name();
-    }    
+        return $arguments ? call_user_func_array([$this->{$this->key}, $name], $arguments) : $this->{$this->key}->$name();
+    }
 }

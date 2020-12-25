@@ -222,7 +222,7 @@ class MeetingAdder implements Arrayable
             'scheduler' => $this->scheduler,
             'presenter' => $this->presenter,
             'host' => $this->host,
-            'metaAttributes' => $this->metaAttributes
+            'metaAttributes' => $this->metaAttributes,
         ];
     }
 

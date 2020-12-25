@@ -7,13 +7,13 @@ use Nncodes\Meeting\Providers\Zoom\Support\Repository;
 
 class Zoom
 {
-    use Support\MakesHttpRequests,
-        Actions\ManagesRoles,
-        Actions\ManagesUsers,
-        Actions\ManagesMeetings,
-        Actions\ManagesPastMeetings,
-        Actions\ManagesRecordingFiles,
-        Actions\ManagesAccounts;
+    use Support\MakesHttpRequests;
+    use Actions\ManagesRoles;
+    use Actions\ManagesUsers;
+    use Actions\ManagesMeetings;
+    use Actions\ManagesPastMeetings;
+    use Actions\ManagesRecordingFiles;
+    use Actions\ManagesAccounts;
 
     /**
      * The Guzzle HTTP Client instance.
@@ -24,7 +24,7 @@ class Zoom
 
     /**
      * Create a new Zoom instance.
-     * 
+     *
      * @param string $apiKey
      * @return void
      */
@@ -41,14 +41,14 @@ class Zoom
         ]);
     }
 
-   /**
-    * Transform the items of the collection to the given class.
-    *
-    * @param array $collection
-    * @param array $class
-    * @param \Closure|null $paginator
-    * @return \Nncodes\Meeting\Providers\Zoom\Support\Repository
-    */
+    /**
+     * Transform the items of the collection to the given class.
+     *
+     * @param array $collection
+     * @param array $class
+     * @param \Closure|null $paginator
+     * @return \Nncodes\Meeting\Providers\Zoom\Support\Repository
+     */
     protected function transformCollection(array $collection, array $class, ?Closure $paginator): Repository
     {
         $collectionData = $collection;
@@ -56,20 +56,20 @@ class Zoom
 
         [$class, $key] = $class;
 
-        if( $key && isset($collection[$key])){
+        if ($key && isset($collection[$key])) {
             $collectionData = $collection[$key];
             unset($collection[$key]);
             $attributes = $collection;
         }
 
         $resources = array_map(
-            fn ($data) => new $class($data, $this), 
+            fn ($data) => new $class($data, $this),
             $collectionData
         );
 
         $repository = new Support\Repository($resources, $attributes, $key);
 
-        if( $paginator && is_callable($paginator)){
+        if ($paginator && is_callable($paginator)) {
             $repository->paginator($paginator);
         }
         

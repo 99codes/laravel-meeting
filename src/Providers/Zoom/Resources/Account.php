@@ -9,50 +9,50 @@ use Nncodes\Meeting\Providers\Zoom\Support\Repository;
  */
 class Account extends Resource
 {
-	/**
-	 * Account ID.
-	 * @var string
-	 */
-	public string $id;
+    /**
+     * Account ID.
+     * @var string
+     */
+    public string $id;
 
-	/**
-	 * Account owner ID.
-	 * @var string
-	 */
-	public string $ownerId;
+    /**
+     * Account owner ID.
+     * @var string
+     */
+    public string $ownerId;
 
-	/**
-	 * Account owner email.
-	 * @var string
-	 */
-	public string $ownerEmail;
+    /**
+     * Account owner email.
+     * @var string
+     */
+    public string $ownerEmail;
 
-	/**
-	 * Account creation date and time.
-	 * @var string
-	 */
-	public string $createdAt;
+    /**
+     * Account creation date and time.
+     * @var string
+     */
+    public string $createdAt;
 
-	/**
-	 * Account options object.
-	 * @var array
-	 */
-	public array $options;
+    /**
+     * Account options object.
+     * @var array
+     */
+    public array $options;
 
-	/**
-	 * Account Vanit URL
-	 * @var string
-	 */
-	public string $vanityUrl;
+    /**
+     * Account Vanit URL
+     * @var string
+     */
+    public string $vanityUrl;
 
-	/**
-	 * List Cloud Recordings available on an Account.
-	 *
-	 * @param array $query
-	 * @return \Nncodes\Meeting\Providers\Zoom\Support\Repository
-	 */
-	public function recordings(array $query = []): Repository
-	{
-		return $this->zoom->accountMeetingRecordings($this->id, $query);
-	}
+    /**
+     * List Cloud Recordings available on an Account.
+     *
+     * @param array $query
+     * @return \Nncodes\Meeting\Providers\Zoom\Support\Repository
+     */
+    public function recordings(array $query = []): Repository
+    {
+        return $this->zoom->accountMeetingRecordings($this->id, $query);
+    }
 }

@@ -46,8 +46,9 @@ class MeetingServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/meeting.php', 'meeting');
 
-        $this->app->singleton(Providers\Zoom\Zoom::class, function(){
+        $this->app->singleton(Providers\Zoom\Zoom::class, function () {
             $jwtToken = config('meeting.providers.zoom.jwt_token');
+
             return new Providers\Zoom\Zoom($jwtToken);
         });
 

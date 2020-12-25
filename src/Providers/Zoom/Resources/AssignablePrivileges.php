@@ -8,533 +8,533 @@ class AssignablePrivileges
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST USER_READ = "User:Read";
+    const USER_READ = "User:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST USER_EDIT = "User:Edit";
+    const USER_EDIT = "User:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST ROLE_READ = "Role:Read";
+    const ROLE_READ = "Role:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST ROLE_EDIT = "Role:Edit";
+    const ROLE_EDIT = "Role:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST GROUP_READ = "Group:Read";
+    const GROUP_READ = "Group:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST GROUP_EDIT = "Group:Edit";
+    const GROUP_EDIT = "Group:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST ACCOUNT_PROFILE_READ = "AccountProfile:Read";
+    const ACCOUNT_PROFILE_READ = "AccountProfile:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST ACCOUNT_PROFILE_EDIT = "AccountProfile:Edit";
+    const ACCOUNT_PROFILE_EDIT = "AccountProfile:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST ACCOUNT_SETTING_READ = "AccountSetting:Read";
+    const ACCOUNT_SETTING_READ = "AccountSetting:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST ACCOUNT_SETTING_EDIT = "AccountSetting:Edit";
+    const ACCOUNT_SETTING_EDIT = "AccountSetting:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST WEBINAR_SETTING_READ = "WebinarSetting:Read";
+    const WEBINAR_SETTING_READ = "WebinarSetting:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST WEBINAR_SETTING_EDIT = "WebinarSetting:Edit";
+    const WEBINAR_SETTING_EDIT = "WebinarSetting:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST RECORDING_READ = "Recording:Read";
+    const RECORDING_READ = "Recording:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST RECORDING_EDIT = "Recording:Edit";
+    const RECORDING_EDIT = "Recording:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST RECORDING_CONTENT_READ = "RecordingContent:Read";
+    const RECORDING_CONTENT_READ = "RecordingContent:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST SUB_ACCOUNT_READ = "SubAccount:Read";
+    const SUB_ACCOUNT_READ = "SubAccount:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST SUB_ACCOUNT_EDIT = "SubAccount:Edit";
+    const SUB_ACCOUNT_EDIT = "SubAccount:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST CALL_IN_CONTACTS_READ = "CallInContacts:Read";
+    const CALL_IN_CONTACTS_READ = "CallInContacts:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST CALL_IN_CONTACTS_EDIT = "CallInContacts:Edit";
+    const CALL_IN_CONTACTS_EDIT = "CallInContacts:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST ZOOM_ROOMS_READ = "ZoomRooms:Read";
+    const ZOOM_ROOMS_READ = "ZoomRooms:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST ZOOM_ROOMS_EDIT = "ZoomRooms:Edit";
+    const ZOOM_ROOMS_EDIT = "ZoomRooms:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST IM_CHAT_HISTORY_READ = "IMChatHistory:Read";
+    const IM_CHAT_HISTORY_READ = "IMChatHistory:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST IM_GROUPS_READ = "IMGroups:Read";
+    const IM_GROUPS_READ = "IMGroups:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST IM_GROUPS_EDIT = "IMGroups:Edit";
+    const IM_GROUPS_EDIT = "IMGroups:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST IM_SETTING_READ = "IMSetting:Read";
+    const IM_SETTING_READ = "IMSetting:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST IM_SETTING_EDIT = "IMSetting:Edit";
+    const IM_SETTING_EDIT = "IMSetting:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST BILLING_SUBSCRIPTION_READ = "BillingSubscription:Read";
+    const BILLING_SUBSCRIPTION_READ = "BillingSubscription:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST BILLING_SUBSCRIPTION_EDIT = "BillingSubscription:Edit";
+    const BILLING_SUBSCRIPTION_EDIT = "BillingSubscription:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST BILLING_INFORMATION_READ = "BillingInformation:Read";
+    const BILLING_INFORMATION_READ = "BillingInformation:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST BILLING_INFORMATION_EDIT = "BillingInformation:Edit";
+    const BILLING_INFORMATION_EDIT = "BillingInformation:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST USAGE_REPORT_READ = "UsageReport:Read";
+    const USAGE_REPORT_READ = "UsageReport:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST USER_ACTIVITIES_REPORT_READ = "UserActivitiesReport:Read";
+    const USER_ACTIVITIES_REPORT_READ = "UserActivitiesReport:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST SCHEDULE_TRACKING_FIELDS_READ = "ScheduleTrackingFields:Read";
+    const SCHEDULE_TRACKING_FIELDS_READ = "ScheduleTrackingFields:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST SCHEDULE_TRACKING_FIELDS_EDIT = "ScheduleTrackingFields:Edit";
+    const SCHEDULE_TRACKING_FIELDS_EDIT = "ScheduleTrackingFields:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST ZOOM_DEVELOPERS_READ = "ZoomDevelopers:Read";
+    const ZOOM_DEVELOPERS_READ = "ZoomDevelopers:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST ZOOM_DEVELOPERS_EDIT = "ZoomDevelopers:Edit";
+    const ZOOM_DEVELOPERS_EDIT = "ZoomDevelopers:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST ROOM_CONNECTOR_READ = "RoomConnector:Read";
+    const ROOM_CONNECTOR_READ = "RoomConnector:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST ROOM_CONNECTOR_EDIT = "RoomConnector:Edit";
+    const ROOM_CONNECTOR_EDIT = "RoomConnector:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST MEETING_CONNECTOR_READ = "MeetingConnector:Read";
+    const MEETING_CONNECTOR_READ = "MeetingConnector:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST MEETING_CONNECTOR_EDIT = "MeetingConnector:Edit";
+    const MEETING_CONNECTOR_EDIT = "MeetingConnector:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST LYNC_CONNECTOR_READ = "LyncConnector:Read";
+    const LYNC_CONNECTOR_READ = "LyncConnector:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST LYNC_CONNECTOR_EDIT = "LyncConnector:Edit";
+    const LYNC_CONNECTOR_EDIT = "LyncConnector:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST THIRD_PARTY_CONFERENCE_READ = "ThirdPartyConference:Read";
+    const THIRD_PARTY_CONFERENCE_READ = "ThirdPartyConference:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST THIRD_PARTY_CONFERENCE_EDIT = "ThirdPartyConference:Edit";
+    const THIRD_PARTY_CONFERENCE_EDIT = "ThirdPartyConference:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST BRANDING_READ = "Branding:Read";
+    const BRANDING_READ = "Branding:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST BRANDING_EDIT = "Branding:Edit";
+    const BRANDING_EDIT = "Branding:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST SINGLE_SIGN_ON_READ = "SingleSignOn:Read";
+    const SINGLE_SIGN_ON_READ = "SingleSignOn:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST SINGLE_SIGN_ON_EDIT = "SingleSignOn:Edit";
+    const SINGLE_SIGN_ON_EDIT = "SingleSignOn:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST INTEGRATION_READ = "Integration:Read";
+    const INTEGRATION_READ = "Integration:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST INTEGRATION_EDIT = "Integration:Edit";
+    const INTEGRATION_EDIT = "Integration:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST MEETING_EDIT = "Meeting:Edit";
+    const MEETING_EDIT = "Meeting:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST MEETING_JOIN = "Meeting:Join";
+    const MEETING_JOIN = "Meeting:Join";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST SIP_PHONE_READ = "SipPhone:Read";
+    const SIP_PHONE_READ = "SipPhone:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST SIP_PHONE_EDIT = "SipPhone:Edit";
+    const SIP_PHONE_EDIT = "SipPhone:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST CROSS_HYBRID_READ = "CrossHybrid:Read";
+    const CROSS_HYBRID_READ = "CrossHybrid:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST CROSS_HYBRID_EDIT = "CrossHybrid:Edit";
+    const CROSS_HYBRID_EDIT = "CrossHybrid:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST SECURITY_READ = "Security:Read";
+    const SECURITY_READ = "Security:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST SECURITY_EDIT = "Security:Edit";
+    const SECURITY_EDIT = "Security:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST DIGITAL_SIGNAGE_READ = "DigitalSignage:Read";
+    const DIGITAL_SIGNAGE_READ = "DigitalSignage:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST DIGITAL_SIGNAGE_EDIT = "DigitalSignage:Edit";
+    const DIGITAL_SIGNAGE_EDIT = "DigitalSignage:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST MARKET_PLACE_READ = "MarketPlace:Read";
+    const MARKET_PLACE_READ = "MarketPlace:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST MARKET_PLACE_EDIT = "MarketPlace:Edit";
+    const MARKET_PLACE_EDIT = "MarketPlace:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST PBX_ADMIN_READ = "PbxAdmin:Read";
+    const PBX_ADMIN_READ = "PbxAdmin:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST PBX_ADMIN_EDIT = "PbxAdmin:Edit";
+    const PBX_ADMIN_EDIT = "PbxAdmin:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST IM_CHAT_BOT_EDIT = "IMChatBot:Edit";
+    const IM_CHAT_BOT_EDIT = "IMChatBot:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST MOBILE_DEVICE_MANAGEMENT_READ = "MobileDeviceManagement:Read";
+    const MOBILE_DEVICE_MANAGEMENT_READ = "MobileDeviceManagement:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST MOBILE_DEVICE_MANAGEMENT_EDIT = "MobileDeviceManagement:Edit";
+    const MOBILE_DEVICE_MANAGEMENT_EDIT = "MobileDeviceManagement:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST CALENDAR_INTEGRATION_READ = "CalendarIntegration:Read";
+    const CALENDAR_INTEGRATION_READ = "CalendarIntegration:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST CALENDAR_INTEGRATION_EDIT = "CalendarIntegration:Edit";
+    const CALENDAR_INTEGRATION_EDIT = "CalendarIntegration:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST DASHBOARD_HOME_READ = "DashboardHome:Read";
+    const DASHBOARD_HOME_READ = "DashboardHome:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST DASHBOARD_MEETINGS_READ = "DashboardMeetings:Read";
+    const DASHBOARD_MEETINGS_READ = "DashboardMeetings:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST DASHBOARD_MEETING_JOIN_EDIT = "DashboardMeetingJoin:Edit";
+    const DASHBOARD_MEETING_JOIN_EDIT = "DashboardMeetingJoin:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST DASHBOARD_MEETING_CONTROL_EDIT = "DashboardMeetingControl:Edit";
+    const DASHBOARD_MEETING_CONTROL_EDIT = "DashboardMeetingControl:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST DASHBOARD_MEETING_END_EDIT = "DashboardMeetingEnd:Edit";
+    const DASHBOARD_MEETING_END_EDIT = "DashboardMeetingEnd:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST DASHBOARD_ZR_READ = "DashboardZR:Read";
+    const DASHBOARD_ZR_READ = "DashboardZR:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST DASHBOARD_CRC_READ = "DashboardCRC:Read";
+    const DASHBOARD_CRC_READ = "DashboardCRC:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST DASHBOARD_WEBINARS_READ = "DashboardWebinars:Read";
+    const DASHBOARD_WEBINARS_READ = "DashboardWebinars:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST DASHBOARD_WEBINAR_JOIN_EDIT = "DashboardWebinarJoin:Edit";
+    const DASHBOARD_WEBINAR_JOIN_EDIT = "DashboardWebinarJoin:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST DASHBOARD_IM_READ = "DashboardIM:Read";
+    const DASHBOARD_IM_READ = "DashboardIM:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST DASHBOARD_PBX_READ = "DashboardPBX:Read";
+    const DASHBOARD_PBX_READ = "DashboardPBX:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST USER_ADVANCED_READ = "UserAdvanced:Read";
+    const USER_ADVANCED_READ = "UserAdvanced:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST USER_ADVANCED_EDIT = "UserAdvanced:Edit";
+    const USER_ADVANCED_EDIT = "UserAdvanced:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST CHAT_MESSAGE_READ = "ChatMessage:Read";
+    const CHAT_MESSAGE_READ = "ChatMessage:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST CHAT_MESSAGE_EDIT = "ChatMessage:Edit";
+    const CHAT_MESSAGE_EDIT = "ChatMessage:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST CHAT_CHANNEL_READ = "ChatChannel:Read";
+    const CHAT_CHANNEL_READ = "ChatChannel:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST INFORMATIONBARRIERS_READ = "Informationbarriers:Read";
+    const INFORMATIONBARRIERS_READ = "Informationbarriers:Read";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST INFORMATIONBARRIERS_EDIT = "Informationbarriers:Edit";
+    const INFORMATIONBARRIERS_EDIT = "Informationbarriers:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST CHAT_CHANNEL_EDIT = "ChatChannel:Edit";
+    const CHAT_CHANNEL_EDIT = "ChatChannel:Edit";
 
     /**
     * View user information, including the assignment of users to roles.
     * @var string
     */
-    CONST NEW_IM_CHAT_HISTORY_READ = "NewIMChatHistory:Read";
+    const NEW_IM_CHAT_HISTORY_READ = "NewIMChatHistory:Read";
 }

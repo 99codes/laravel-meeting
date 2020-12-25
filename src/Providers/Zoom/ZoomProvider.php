@@ -44,7 +44,7 @@ class ZoomProvider implements Provider
     public function scheduling(MeetingAdder $meeting): void
     {
         $meeting->withMetaAttributes([
-            'email' => $this->zoom->user('me')->email
+            'email' => $this->zoom->user('me')->email,
         ]);
     }
 
