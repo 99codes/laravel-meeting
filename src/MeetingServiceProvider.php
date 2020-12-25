@@ -3,7 +3,6 @@
 namespace Nncodes\Meeting;
 
 use Illuminate\Support\ServiceProvider;
-use Nncodes\Meeting\Commands\MeetingCommand;
 
 class MeetingServiceProvider extends ServiceProvider
 {
@@ -31,15 +30,10 @@ class MeetingServiceProvider extends ServiceProvider
             }
 
             $this->commands([
-                MeetingCommand::class,
+                Commands\MeetingCommand::class,
             ]);
         }
 
-        //binds
-        foreach (config('meeting.providers', []) as $key => $target) {
-            $this->app->bind('laravel-meeting:' .$key, $target);
-        }
-        
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'meeting');
     }
 
@@ -51,6 +45,15 @@ class MeetingServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/meeting.php', 'meeting');
+
+        $this->app->singleton(Providers\Zoom\Zoom::class, function(){
+            $jwtToken = config('meeting.providers.zoom.jwt_token');
+            return new Providers\Zoom\Zoom($jwtToken);
+        });
+
+        foreach (config('meeting.providers', []) as $key => $target) {
+            $this->app->bind('laravel-meeting:' .$key, $target['type']);
+        }
     }
 
     /**

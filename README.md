@@ -30,8 +30,6 @@ php artisan vendor:publish --provider="Nncodes\Meeting\MeetingServiceProvider" -
 This is the contents of the published config file:
 
 ```php
-return [
-];
 ```
 
 ## Usage

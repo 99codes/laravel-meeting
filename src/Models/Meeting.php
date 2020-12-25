@@ -37,9 +37,9 @@ class Meeting extends Model
     * @var array
     */
     protected $casts = [
-        'start_time' => 'datetime',
-        'started_at' => 'datetime',
-        'ended_at' => 'datetime',
+        'start_time' => 'datetime:Y-m-d\TH:i:se',
+        'started_at' => 'datetime:Y-m-d\TH:i:se',
+        'ended_at' => 'datetime:Y-m-d\TH:i:se',
     ];
 
     /**

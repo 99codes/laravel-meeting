@@ -3,54 +3,56 @@
 namespace Nncodes\Meeting;
 
 use Carbon\Carbon;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Collection;
 use Nncodes\Meeting\Contracts\Host;
 use Nncodes\Meeting\Contracts\Presenter;
 use Nncodes\Meeting\Contracts\Provider;
 use Nncodes\Meeting\Contracts\Scheduler;
 
-class MeetingAdder
+class MeetingAdder implements Arrayable
 {
 
     /**
       * @var \Carbon\Carbon
       */
-    protected Carbon $startTime;
+    public Carbon $startTime;
 
     /**
      * @var int
      */
-    protected int $duration;
+    public int $duration;
 
     /**
      * @var string
      */
-    protected string $topic;
+    public string $topic;
 
     /**
      * @var \Nncodes\Meeting\Contracts\Scheduler
      */
-    protected Scheduler $scheduler;
+    public Scheduler $scheduler;
 
     /**
      * @var \Nncodes\Meeting\Contracts\Host
      */
-    protected Host $host;
+    public Host $host;
 
     /**
      * @var \Nncodes\Meeting\Contracts\Presenter
      */
-    protected Presenter $presenter;
+    public Presenter $presenter;
 
     /**
      * @var \Nncodes\Meeting\Contracts\Provider
      */
-    protected Provider $provider;
+    public Provider $provider;
 
 
     /**
      * @var array
      */
-    protected array $metaAttributes = [];
+    public array $metaAttributes = [];
 
     /**
      * Undocumented function
@@ -203,5 +205,34 @@ class MeetingAdder
         $this->provider->scheduled($meeting);
 
         return $meeting;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'topic' => $this->topic,
+            'startTime' => $this->startTime->format('Y-m-d\TH:i:se'),
+            'duration' => $this->duration,
+            'provider' => $this->provider->getFacadeAccessor(),
+            'scheduler' => $this->scheduler,
+            'presenter' => $this->presenter,
+            'host' => $this->host,
+            'metaAttributes' => $this->metaAttributes
+        ];
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function toCollection(): \Illuminate\Support\Collection
+    {
+        return new Collection($this->toArray());
     }
 }

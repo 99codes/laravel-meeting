@@ -8,7 +8,7 @@ return [
      * Here you can specify which meeting provider the package should use by 
      * default. Of course you may use many providers at once using the package.
      */
-    'default' => env('MEETING_PROVIDER', 'starter'),
+    'default' => env('MEETING_PROVIDER', 'zoom'),
 
     /**
      * Meeting Providers
@@ -17,10 +17,10 @@ return [
      */
 
     'providers' => [
-
-        'starter' => \Nncodes\Meeting\Providers\Starter::class,
-
-        //'zoom' => \Nncodes\Meeting\Providers\Zoom\Provider::class,
+        'zoom' => [
+            'type' => \Nncodes\Meeting\Providers\Zoom\ZoomProvider::class,
+            'jwt_token' => env('ZOOM_TOKEN'),
+        ],
 
     ],
 

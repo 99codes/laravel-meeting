@@ -13,11 +13,11 @@ class CreateMeetingsTable extends Migration
 
             $table->uuid('uuid');
             $table->string('topic');
-            $table->dateTime('start_time');
+            $table->dateTimeTz('start_time');
             $table->integer('duration');
 
-            $table->dateTime('started_at')->nullable();
-            $table->dateTime('ended_at')->nullable();
+            $table->dateTimeTz('started_at')->nullable();
+            $table->dateTimeTz('ended_at')->nullable();
 
             $table->string('provider');
 
@@ -32,8 +32,8 @@ class CreateMeetingsTable extends Migration
         Schema::create('meeting_participants', function (Blueprint $table) {
 
             $table->uuid('uuid');
-            $table->dateTime('started_at')->nullable();
-            $table->dateTime('ended_at')->nullable();
+            $table->dateTimeTz('started_at')->nullable();
+            $table->dateTimeTz('ended_at')->nullable();
 
             $table->morphs('participant');
             $table->unsignedBigInteger('meeting_id');

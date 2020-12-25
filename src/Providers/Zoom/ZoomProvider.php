@@ -1,6 +1,6 @@
 <?php
 
-namespace Nncodes\Meeting\Providers;
+namespace Nncodes\Meeting\Providers\Zoom;
 
 use Nncodes\Meeting\Contracts\Participant;
 use Nncodes\Meeting\Contracts\Provider;
@@ -8,8 +8,23 @@ use Nncodes\Meeting\MeetingAdder;
 use Nncodes\Meeting\Models\Meeting;
 use Nncodes\Meeting\Models\Participant as ParticipantPivot;
 
-class Starter implements Provider
+class ZoomProvider implements Provider
 {
+    /**
+     * @var Zoom
+     */
+    protected Zoom $zoom;
+
+    /**
+     * Undocumented function
+     *
+     * @param Zoom $zoom
+     */
+    public function __construct(Zoom $zoom)
+    {
+        $this->zoom = $zoom;
+    }
+
     /**
      * Undocumented function
      *
@@ -17,7 +32,7 @@ class Starter implements Provider
      */
     public function getFacadeAccessor(): string
     {
-        return 'starter';
+        return 'zoom';
     }
 
     /**
@@ -29,7 +44,7 @@ class Starter implements Provider
     public function scheduling(MeetingAdder $meeting): void
     {
         $meeting->withMetaAttributes([
-            __METHOD__ => now()->format('Y-m-d H:i:s'),
+            'email' => $this->zoom->user('me')->email
         ]);
     }
 

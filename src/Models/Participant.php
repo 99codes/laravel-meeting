@@ -21,8 +21,8 @@ class Participant extends MorphPivot
     * @var array
     */
     protected $casts = [
-        'started_at' => 'datetime',
-        'ended_at' => 'datetime',
+        'started_at' => 'datetime:Y-m-d\TH:i:se',
+        'ended_at' => 'datetime:Y-m-d\TH:i:se',
     ];
 
     /**
