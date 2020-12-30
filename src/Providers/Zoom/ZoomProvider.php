@@ -4,25 +4,25 @@ namespace Nncodes\Meeting\Providers\Zoom;
 
 use Nncodes\Meeting\Contracts\Participant;
 use Nncodes\Meeting\Contracts\Provider;
-use Nncodes\Meeting\MeetingAdder;
 use Nncodes\Meeting\Models\Meeting;
-use Nncodes\Meeting\Models\Participant as ParticipantPivot;
 
 class ZoomProvider implements Provider
 {
+    use Concerns\InteractsWithMeetings;
+
     /**
      * @var Zoom
      */
-    protected Zoom $zoom;
+    protected Sdk\Zoom $api;
 
     /**
      * Undocumented function
      *
      * @param Zoom $zoom
      */
-    public function __construct(Zoom $zoom)
+    public function __construct(Sdk\Zoom $zoom)
     {
-        $this->zoom = $zoom;
+        $this->api = $zoom;
     }
 
     /**
@@ -38,204 +38,25 @@ class ZoomProvider implements Provider
     /**
      * Undocumented function
      *
-     * @param \Nncodes\Meeting\MeetingAdder $meeting
-     * @return void
+     * @param \Nncodes\Meeting\Models\Meeting $meeting
+     * @return mixed
      */
-    public function scheduling(MeetingAdder $meeting): void
+    public function getPresenterAccess(Meeting $meeting)
     {
-        $meeting->withMetaAttributes([
-            'email' => $this->zoom->user('me')->email,
-        ]);
+        if($zoomMeetingId = $meeting->getMetaValue('zoom_id')){
+            return optional($this->api->meeting($zoomMeetingId))->startUrl;
+        }
     }
 
     /**
      * Undocumented function
      *
      * @param \Nncodes\Meeting\Models\Meeting $meeting
-     * @return void
-     */
-    public function scheduled(Meeting $meeting): void
-    {
-        $meeting->setMetaAttribute(__METHOD__, now()->format('Y-m-d H:i:s'));
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param \Nncodes\Meeting\Models\Meeting $meeting
-     * @return void
-     */
-    public function updating(Meeting $meeting): void
-    {
-        $meeting->setMetaAttribute(__METHOD__, now()->format('Y-m-d H:i:s'));
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param \Nncodes\Meeting\Models\Meeting $meeting
-     * @return void
-     */
-    public function updated(Meeting $meeting): void
-    {
-        $meeting->setMetaAttribute(__METHOD__, now()->format('Y-m-d H:i:s'));
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param \Nncodes\Meeting\Models\Meeting $meeting
-     * @return void
-     */
-    public function starting(Meeting $meeting): void
-    {
-        $meeting->setMetaAttribute(__METHOD__, now()->format('Y-m-d H:i:s'));
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param \Nncodes\Meeting\Models\Meeting $meeting
-     * @return void
-     */
-    public function started(Meeting $meeting): void
-    {
-        $meeting->setMetaAttribute(__METHOD__, now()->format('Y-m-d H:i:s'));
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param \Nncodes\Meeting\Models\Meeting $meeting
-     * @return void
-     */
-    public function ending(Meeting $meeting): void
-    {
-        $meeting->setMetaAttribute(__METHOD__, now()->format('Y-m-d H:i:s'));
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param \Nncodes\Meeting\Models\Meeting $meeting
-     * @return void
-     */
-    public function ended(Meeting $meeting): void
-    {
-        $meeting->setMetaAttribute(__METHOD__, now()->format('Y-m-d H:i:s'));
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param \Nncodes\Meeting\Models\Meeting $meeting
-     * @return void
-     */
-    public function canceling(Meeting $meeting): void
-    {
-        $meeting->setMetaAttribute(__METHOD__, now()->format('Y-m-d H:i:s'));
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param \Nncodes\Meeting\Models\Meeting $meeting
-     * @return void
-     */
-    public function canceled(Meeting $meeting): void
-    {
-        $meeting->setMetaAttribute(__METHOD__, now()->format('Y-m-d H:i:s'));
-    }
-
-    /**
-     * Undocumented function
-     *
      * @param \Nncodes\Meeting\Contracts\Participant $participant
-     * @param \Nncodes\Meeting\Models\Meeting $meeting
-     * @return void
+     * @return mixed
      */
-    public function participantAdding(Participant $participant, Meeting $meeting): void
+    public function getParticipantAccess(Meeting $meeting, Participant $participant)
     {
-        $meeting->setMetaAttribute(__METHOD__, now()->format('Y-m-d H:i:s'));
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param \Nncodes\Meeting\Models\Participant $participant
-     * @return void
-     */
-    public function participantAdded(ParticipantPivot $participant): void
-    {
-        $participant->meeting->setMetaAttribute(__METHOD__, now()->format('Y-m-d H:i:s'));
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param \Nncodes\Meeting\Contracts\Participant $participant
-     * @param \Nncodes\Meeting\Models\Meeting $meeting
-     * @return void
-     */
-    public function participantCanceling(Participant $participant, Meeting $meeting): void
-    {
-        $meeting->setMetaAttribute(__METHOD__, now()->format('Y-m-d H:i:s'));
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param \Nncodes\Meeting\Models\Participant $participant
-     * @return void
-     */
-    public function participantCanceled(ParticipantPivot $participant): void
-    {
-        $participant->meeting->setMetaAttribute(__METHOD__, now()->format('Y-m-d H:i:s'));
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param \Nncodes\Meeting\Contracts\Participant $participant
-     * @param \Nncodes\Meeting\Models\Meeting $meeting
-     * @return void
-     */
-    public function participantJoining(Participant $participant, Meeting $meeting): void
-    {
-        $meeting->setMetaAttribute(__METHOD__, now()->format('Y-m-d H:i:s'));
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param \Nncodes\Meeting\Models\Participant $participant
-     * @return void
-     */
-    public function participantJoined(ParticipantPivot $participant): void
-    {
-        $participant->meeting->setMetaAttribute(__METHOD__, now()->format('Y-m-d H:i:s'));
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param \Nncodes\Meeting\Contracts\Participant $participant
-     * @param \Nncodes\Meeting\Models\Meeting $meeting
-     * @return void
-     */
-    public function participantLeaving(Participant $participant, Meeting $meeting): void
-    {
-        $meeting->setMetaAttribute(__METHOD__, now()->format('Y-m-d H:i:s'));
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param \Nncodes\Meeting\Models\Participant $participant
-     * @return void
-     */
-    public function participantLeft(ParticipantPivot $participant): void
-    {
-        $participant->meeting->setMetaAttribute(__METHOD__, now()->format('Y-m-d H:i:s'));
+        return optional($meeting->getMetaValue('participant_' . $participant->id))->joinUrl;
     }
 }

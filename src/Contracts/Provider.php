@@ -30,19 +30,19 @@ interface Provider
 
     public function canceled(Meeting $meeting): void;
 
-    public function participantAdding(Participant $participant, Meeting $meeting): void;
+    public function participantAdding(Participant $participant, Meeting $meeting, string $uuid): void;
 
     public function participantAdded(ParticipantPivot $participant): void;
 
-    public function participantCanceling(Participant $participant, Meeting $meeting): void;
+    public function participationCanceling(ParticipantPivot $participant): void;
 
-    public function participantCanceled(ParticipantPivot $participant): void;
+    public function participationCanceled(ParticipantPivot $participant): void;
 
-    public function participantJoining(Participant $participant, Meeting $meeting): void;
+    public function participantJoining(ParticipantPivot $participant): void;
 
     public function participantJoined(ParticipantPivot $participant): void;
 
-    public function participantLeaving(Participant $participant, Meeting $meeting): void;
+    public function participantLeaving(ParticipantPivot $participant): void;
 
     public function participantLeft(ParticipantPivot $participant): void;
 }

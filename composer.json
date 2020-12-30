@@ -19,7 +19,7 @@
         "php": "^7.2.5|^7.3|^8.0",
         "guzzlehttp/guzzle": "^7.0",
         "illuminate/contracts": "^6.0|^7.0|^8.0",
-        "nncodes/laravel-meta-attributes": "^1.0"
+        "nncodes/laravel-meta-attributes": "^2.0"
     },
     "require-dev": {
         "orchestra/testbench": "^4.0|^5.0|^6.0",

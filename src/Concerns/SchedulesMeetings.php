@@ -5,12 +5,15 @@ namespace Nncodes\Meeting\Concerns;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Nncodes\Meeting\MeetingAdder;
 use Nncodes\Meeting\Models\Meeting;
+use Nncodes\Meeting\Models\Traits\VerifiesAvailability;
 
 /**
  * Provides default implementation of Scheduler contract.
  */
 trait SchedulesMeetings
 {
+    use VerifiesAvailability;
+    
     /**
      * Get the MorphMany Relation with the Meeting Model
      *

@@ -8,13 +8,13 @@ use Nncodes\MetaAttributes\Concerns\HasMetaAttributes;
 
 class Meeting extends Model
 {
-    use SoftDeletes;
-    use HasMetaAttributes;
-    use Traits\QueriesMeeting;
-    use Traits\DefinesMeetingRelationship;
-    use Traits\ManipulatesParticipants;
-    use Traits\ProvidesMeetingAccessors;
-    use Traits\ManipulatesMeeting;
+    use SoftDeletes,
+        HasMetaAttributes,
+        Traits\QueriesMeeting,
+        Traits\DefinesMeetingRelationship,
+        Traits\ManipulatesParticipants,
+        Traits\ProvidesMeetingAccessors,
+        Traits\ManipulatesMeeting;
     
     /**
      * The attributes that are mass assignable.
@@ -48,9 +48,12 @@ class Meeting extends Model
      * @var array
      */
     protected $hidden = [
-        'scheduler_type', 'scheduler_id',
-        'host_type', 'host_id',
-        'presenter_type', 'presenter_id',
+        'scheduler_type', 
+        'scheduler_id',
+        'host_type', 
+        'host_id',
+        'presenter_type', 
+        'presenter_id',
     ];
 
     /**
@@ -58,5 +61,19 @@ class Meeting extends Model
     *
     * @var array
     */
-    protected $with = ['scheduler', 'presenter', 'host'];
+    protected $with = [
+        'scheduler', 
+        'presenter', 
+        'host'
+    ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'end_time',
+        'elapsed_time'
+    ];
 }

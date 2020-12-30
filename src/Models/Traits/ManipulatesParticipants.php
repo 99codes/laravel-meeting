@@ -3,6 +3,7 @@
 namespace Nncodes\Meeting\Models\Traits;
 
 use Nncodes\Meeting\Contracts\Participant;
+use Nncodes\Meeting\Exceptions\BusyForTheMeeting;
 use Nncodes\Meeting\Models\Participant as ParticipantPivot;
 
 /**
@@ -48,8 +49,7 @@ trait ManipulatesParticipants
      * Undocumented function
      *
      * @param \Nncodes\Meeting\Contracts\Participant $participant
-     * @throws \Nncodes\Meeting\Exceptions\ParticipantAlreadyAdded
-     * @return \Ramsey\Uuid\Uuid|null
+     * @return \Nncodes\Meeting\Models\Participant
      */
     public function addParticipant(Participant $participant): ParticipantPivot
     {
@@ -57,10 +57,16 @@ trait ManipulatesParticipants
             throw \Nncodes\Meeting\Exceptions\ParticipantAlreadyAdded::create($participant, $this);
         }
 
-        $this->instance->participantAdding($participant, $this);
+        if(!config('meeting.allow_concurrence_meetings.participant')
+            && $participant->isBusyBetween($this->start_time, $this->end_time)
+        ){
+            throw BusyForTheMeeting::createForParticipant($this, $participant);
+        }
+        
+        $this->instance->participantAdding($participant, $this, $uuid = \Illuminate\Support\Str::uuid());
 
         $this->participants(get_class($participant))->save($participant, [
-            'uuid' => \Illuminate\Support\Str::uuid(),
+            'uuid' => $uuid,
         ]);
 
         $this->instance->participantAdded(
@@ -79,17 +85,15 @@ trait ManipulatesParticipants
      */
     public function cancelParticipation(Participant $participant): bool
     {
-        if (! $this->hasParticipant($participant)) {
+        if (!$participantPivot = $this->participant($participant)) {
             throw \Nncodes\Meeting\Exceptions\ParticipantNotRegistered::create($participant, $this);
         }
 
-        $this->instance->participantCanceling($participant, $this);
-
-        $participantPivot = $this->participant($participant);
+        $this->instance->participationCanceling($participantPivot);
 
         $canceled = $participantPivot->cancel();
 
-        $this->instance->participantCanceled($participantPivot);
+        $this->instance->participationCanceled($participantPivot);
 
         return $canceled;
     }
@@ -103,11 +107,11 @@ trait ManipulatesParticipants
      */
     public function joinParticipant(Participant $participant): ParticipantPivot
     {
-        if (! $this->hasParticipant($participant)) {
+        if (!$participantPivot = $this->participant($participant)) {
             throw \Nncodes\Meeting\Exceptions\ParticipantNotRegistered::create($participant, $this);
         }
 
-        $this->instance->participantJoining($participant, $this);
+        $this->instance->participantJoining($participantPivot, $this);
 
         $this->instance->participantJoined(
             $participantPivot = $this->participant($participant)->join()
@@ -125,11 +129,11 @@ trait ManipulatesParticipants
      */
     public function leaveParticipant(Participant $participant): ParticipantPivot
     {
-        if (! $this->hasParticipant($participant)) {
+        if (!$participantPivot = $this->participant($participant)) {
             throw \Nncodes\Meeting\Exceptions\ParticipantNotRegistered::create($participant, $this);
         }
 
-        $this->instance->participantLeaving($participant, $this);
+        $this->instance->participantLeaving($participantPivot, $this);
 
         $this->instance->participantLeft(
             $participantPivot = $this->participant($participant)->leave()

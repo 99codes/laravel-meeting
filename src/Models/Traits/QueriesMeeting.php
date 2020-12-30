@@ -4,6 +4,7 @@ namespace Nncodes\Meeting\Models\Traits;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use Nncodes\Meeting\Contracts\Host;
 use Nncodes\Meeting\Contracts\Participant;
 use Nncodes\Meeting\Contracts\Presenter;
@@ -23,7 +24,7 @@ trait QueriesMeeting
      */
     public function scopeByUuid(Builder $query, string $uuid): Builder
     {
-        return $query->whereUuid($uuid);
+        return $query->where($this->getTable() . 'uuid', $uuid);
     }
 
     /**
@@ -35,7 +36,7 @@ trait QueriesMeeting
      */
     public function scopeById(Builder $query, int $id): Builder
     {
-        return $query->whereId($id);
+        return $query->where($this->getTable() . '.id', $id);
     }
 
     /**
@@ -50,7 +51,7 @@ trait QueriesMeeting
         return $query->whereHasMorph(
             'scheduler',
             get_class($scheduler),
-            fn (Builder $query) => $query->where('id', $scheduler->id)
+            fn (Builder $query) => $query->where($this->getTable() . '.id', $scheduler->id)
         );
     }
 
@@ -66,7 +67,7 @@ trait QueriesMeeting
         return $query->whereHasMorph(
             'presenter',
             get_class($presenter),
-            fn (Builder $query) => $query->where('id', $presenter->id)
+            fn (Builder $query) => $query->where($this->getTable() . '.id', $presenter->id)
         );
     }
 
@@ -82,7 +83,7 @@ trait QueriesMeeting
         return $query->whereHasMorph(
             'host',
             get_class($host),
-            fn (Builder $query) => $query->where('id', $host->id)
+            fn (Builder $query) => $query->where($this->getTable() . '.id', $host->id)
         );
     }
 
@@ -113,7 +114,23 @@ trait QueriesMeeting
      */
     public function scopeStartsBetween(Builder $query, Carbon $start, Carbon $end): Builder
     {
-        return $query->whereBetween('start_time', [
+        return $query->whereBetween($this->getTable(). '.start_time', [
+            $start->format('Y-m-d H:i:s'),
+            $end->format('Y-m-d H:i:s'),
+        ]);
+    }
+
+     /**
+     * Scope a query to filter by start_time plus duration between dates
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Carbon\Carbon $start
+     * @param \Carbon\Carbon $end
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeEndsBetween(Builder $query, Carbon $start, Carbon $end): Builder
+    {
+        return $query->whereBetween(DB::raw('DATE_ADD('.$this->getTable().'.start_time, INTERVAL '.$this->getTable().'.duration MINUTE)'), [
             $start->format('Y-m-d H:i:s'),
             $end->format('Y-m-d H:i:s'),
         ]);
@@ -128,7 +145,7 @@ trait QueriesMeeting
      */
     public function scopeStartsFrom(Builder $query, Carbon $start): Builder
     {
-        return $query->where('start_time', '>=', $start->format('Y-m-d H:i:s'));
+        return $query->where($this->getTable() . '.start_time', '>=', $start->format('Y-m-d H:i:s'));
     }
 
     /**
@@ -140,7 +157,7 @@ trait QueriesMeeting
      */
     public function scopeStartsUntil(Builder $query, Carbon $end): Builder
     {
-        return $query->where('start_time', '<=', $end->format('Y-m-d H:i:s'));
+        return $query->where($this->getTable() . '.start_time', '<=', $end->format('Y-m-d H:i:s'));
     }
 
     /**
@@ -154,7 +171,7 @@ trait QueriesMeeting
     public function scopeProvider(Builder $query, string $provider): Builder
     {
         if (config('meeting.providers.' . $provider)) {
-            return $query->where('provider', $provider);
+            return $query->where($this->getTable() . '.provider', $provider);
         }
 
         throw \Nncodes\Meeting\Exceptions\InvalidProvider::create($provider);
@@ -168,7 +185,7 @@ trait QueriesMeeting
      */
     public function scopeScheduled(Builder $query): Builder
     {
-        return $query->whereNull(['started_at','ended_at']);
+        return $query->whereNull([$this->getTable() . '.started_at', $this->getTable() . '.ended_at']);
     }
 
     /**
@@ -179,7 +196,7 @@ trait QueriesMeeting
      */
     public function scopePast(Builder $query): Builder
     {
-        return $query->whereNotNull(['started_at','ended_at']);
+        return $query->whereNotNull([$this->getTable() . '.started_at', $this->getTable() . '.ended_at']);
     }
 
     /**
@@ -190,7 +207,7 @@ trait QueriesMeeting
      */
     public function scopeLive(Builder $query): Builder
     {
-        return $query->whereNotNull('started_at')->whereNull('ended_at');
+        return $query->whereNotNull($this->getTable() . '.started_at')->whereNull($this->getTable() . '.ended_at');
     }
 
     /**
@@ -201,7 +218,7 @@ trait QueriesMeeting
      */
     public function scopeNext(Builder $query): Builder
     {
-        return $query->scheduled()->orderBy('start_time', 'asc');
+        return $query->scheduled()->orderBy($this->getTable() . '.start_time', 'asc');
     }
 
     /**
@@ -212,6 +229,6 @@ trait QueriesMeeting
      */
     public function scopeLast(Builder $query): Builder
     {
-        return $query->past()->orderBy('ended_at', 'desc');
+        return $query->past()->orderBy($this->getTable() . '.ended_at', 'desc');
     }
 }

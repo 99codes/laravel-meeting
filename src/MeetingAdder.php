@@ -9,6 +9,7 @@ use Nncodes\Meeting\Contracts\Host;
 use Nncodes\Meeting\Contracts\Presenter;
 use Nncodes\Meeting\Contracts\Provider;
 use Nncodes\Meeting\Contracts\Scheduler;
+use Nncodes\Meeting\Exceptions\BusyForTheMeeting;
 
 class MeetingAdder implements Arrayable
 {
@@ -178,11 +179,35 @@ class MeetingAdder implements Arrayable
     /**
      * Undocumented function
      *
+     * @param array $concurrences
+     * @throws  \Nncodes\Meeting\Exceptions\BusyForTheMeeting
+     * @return void
+     */
+    protected function preventConcurrences(array $concurrences)
+    {
+        $endTime = (clone $this->startTime)->addMinutes($this->duration);
+
+        foreach( $concurrences as $relation => $allowed ){
+            if(!$allowed && isset($this->{$relation}) 
+                && $this->{$relation}->isBusyBetween($this->startTime, $endTime)
+            ){
+                throw BusyForTheMeeting::create($this, $relation);
+            }
+        }
+    }
+
+    /**
+     * Undocumented function
+     *
      * @return Models\Meeting
      */
     public function save(): Models\Meeting
     {
         $this->provider->scheduling($this);
+
+        $this->preventConcurrences(
+            config('meeting.allow_concurrence_meetings', [])
+        );
 
         $meeting = new Models\Meeting([
             'uuid' => \Illuminate\Support\Str::uuid(),
@@ -199,7 +224,7 @@ class MeetingAdder implements Arrayable
         $meeting->save();
 
         foreach ($this->metaAttributes as $key => $value) {
-            $meeting->setMetaAttribute($key, $value);
+            $meeting->setMeta($key)->value($value);
         }
 
         $this->provider->scheduled($meeting);

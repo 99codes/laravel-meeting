@@ -5,12 +5,15 @@ namespace Nncodes\Meeting\Concerns;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Nncodes\Meeting\Models\Meeting;
 use Nncodes\Meeting\Models\Participant;
+use Nncodes\Meeting\Models\Traits\VerifiesAvailability;
 
 /**
  * Provides default implementation of Participant contract.
  */
 trait JoinsMeetings
 {
+    use VerifiesAvailability;
+    
     /**
      * Get the MorphToMany Relation with the Meeting Model
      *

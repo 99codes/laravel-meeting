@@ -30,7 +30,6 @@ class CreateMeetingsTable extends Migration
         });
 
         Schema::create('meeting_participants', function (Blueprint $table) {
-
             $table->uuid('uuid');
             $table->dateTimeTz('started_at')->nullable();
             $table->dateTimeTz('ended_at')->nullable();
@@ -44,5 +43,30 @@ class CreateMeetingsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::create('meeting_rooms', function(Blueprint $table) {
+            $table->bigIncrements('id');
+
+            $table->uuid('uuid');
+            $table->string('name', 100);
+            $table->string('email');
+            $table->tinyInteger('type');
+            $table->string('group');
+            
+            $table->timestamps();
+            $table->softDeletes();
+        });
+    }
+
+     /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('meeting_participants');
+        Schema::dropIfExists('meetings');
+        Schema::dropIfExists('meeting_rooms');
     }
 }

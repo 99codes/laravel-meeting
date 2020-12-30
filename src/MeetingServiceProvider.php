@@ -30,7 +30,7 @@ class MeetingServiceProvider extends ServiceProvider
             }
 
             $this->commands([
-                Commands\MeetingCommand::class,
+                Providers\Zoom\Commands\SyncUsersCommand::class
             ]);
         }
 
@@ -46,10 +46,10 @@ class MeetingServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/meeting.php', 'meeting');
 
-        $this->app->singleton(Providers\Zoom\Zoom::class, function () {
+        $this->app->singleton(Providers\Zoom\Sdk\Zoom::class, function () {
             $jwtToken = config('meeting.providers.zoom.jwt_token');
 
-            return new Providers\Zoom\Zoom($jwtToken);
+            return new Providers\Zoom\Sdk\Zoom($jwtToken);
         });
 
         foreach (config('meeting.providers', []) as $key => $target) {

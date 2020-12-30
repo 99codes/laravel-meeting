@@ -5,15 +5,32 @@ namespace Nncodes\Meeting\Models;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphPivot;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Nncodes\MetaAttributes\Concerns\HasMetaAttributes;
 
 class Participant extends MorphPivot
 {
+    use HasMetaAttributes;
+
     /**
      * The table associated with the model.
      *
      * @var string
      */
     protected $table = 'meeting_participants';
+
+        /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'uuid';
+
+    /**
+     * The "type" of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
 
     /**
     * The attributes that should be cast to native types.

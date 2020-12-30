@@ -30,6 +30,104 @@ php artisan vendor:publish --provider="Nncodes\Meeting\MeetingServiceProvider" -
 This is the contents of the published config file:
 
 ```php
+namespace App;
+
+use Carbon\Carbon;
+use Nncodes\Meeting\Models\Meeting;
+
+$from = Carbon::now()->sub('15 days');
+$to = Carbon::now()->add('15 days');
+
+$student = Student::first();
+$address = Address::first();
+$teacher = Teacher::first();
+$event = Event::first();
+
+
+//Schedule a meeting from meeting model
+// Meeting::schedule()
+//   	->withTopic($event->topic)
+//   	->startingAt($event->starts_at)
+//   	->during(rand(20, 60))
+//   	->scheduledBy($event)
+//   	->presentedBy($teacher)
+//   	->hostedBy($address)
+//   	->save()
+
+$meeting = Meeting::find(1)->start_time->utc()->format('Y-m-d\TH:i:se');
+
+// //Schedule a meeting from scheduler model
+// $event->scheduleMeeting()
+//   	->withTopic($event->topic)
+//   	->startingAt($event->starts_at)
+//   	->during(rand(20, 60))
+//   	->presentedBy($teacher)
+//   	->hostedBy($address)
+//   	->save()
+
+
+
+// // //Updating a meeting.
+// $meeting->updateTopic('Introducing Yourself')
+//   	->updateDuration(60)
+//   	->updateStartTime(now())
+//   	->updateScheduler(Event::find(1))
+//   	->updatePresenter(Teacher::find(5))
+//   	->updateHost(Address::find(1))
+//   	->save();
+  
+// //Retrieves a collection of meetings. Works for any actor.
+// //In meeting model use Meeting:query()->presenter...
+
+// $meeting = $address->meetings()
+//   	->presenter(Teacher::find(5))
+//   	->scheduler(Event::find(1))
+//   	->provider('starter')
+//   	->startsFrom($from)
+//   	->startsUntil($to)
+//   	//or ->startsBetween($from, $to)
+//   	->first();
+
+// //Retrieving the next meeting using meeting model
+// $meeting = Meeting::scheduled()->orderBy('start_time', 'asc')->first();
+// //Or
+// $meeting = Meeting::next()->firstOrFail();
+
+// //Starting a Meeting
+// $meeting->start();
+
+// //Adding a participant to a meeting
+// $meeting->addParticipant($student);
+// $meeting->joinParticipant($student);
+// $meeting->leaveParticipant($student);
+// $meeting->cancelParticipation($student);
+
+// //Or
+// $student->bookMeeting($meeting);
+// $student->joinMeeting($meeting);
+// $student->leaveMeeting($meeting);
+// $student->cancelMeetingParticipation($meeting);
+
+// //Ending a meeting
+// $meeting->end();
+
+// //Cancel a meeting
+// $meeting->cancel();
+
+// //Retrieving the last meeting using meeting model
+// $meeting = Meeting::past()->orderBy('started_at', 'desc')->first();
+// //Or
+// $meeting = Meeting::last()->firstOrFail();
+
+// //Retrieving the live meetings using meeting model
+// $liveMeetings = Meeting::live()->get();
+
+// //all scopes methods works inside the relations. Eg.
+$scheduler->meetings()->live()->first();
+$host->meetings()->past->get();
+$presenter->meetings()->scheduled()->first();
+$participant->meetings()->next()->first();
+
 ```
 
 ## Usage

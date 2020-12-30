@@ -2,6 +2,7 @@
 
 namespace Nncodes\Meeting\Models\Traits;
 
+use Carbon\Carbon;
 use Nncodes\Meeting\Contracts\Provider;
 
 /**
@@ -26,12 +27,26 @@ trait ProvidesMeetingAccessors
     /**
      * Undocumented function
      *
+     * @return \Carbon\Carbon
+     */
+    public function getEndTimeAttribute(): Carbon
+    {
+        $startTime = clone $this->start_time;
+        return $startTime->addMinutes($this->duration);
+    }
+
+    /**
+     * Undocumented function
+     *
      * @return int|null
      */
-    public function getRealDurationAttribute(): ?int
+    public function getElapsedTimeAttribute(): ?int
     {
-        if ($this->started_at && $this->ended_at) {
-            return $this->started_at->diffInMinutes($this->ended_at);
+        if ($this->started_at) {
+            $endedAt = $this->ended_at ?: now();
+            return $this->started_at->diffInMinutes($endedAt);
         }
+
+        return 0;
     }
 }

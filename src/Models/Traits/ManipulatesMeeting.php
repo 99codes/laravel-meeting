@@ -4,6 +4,7 @@ namespace Nncodes\Meeting\Models\Traits;
 
 use Carbon\Carbon;
 use Nncodes\Meeting\Contracts\Host;
+use Nncodes\Meeting\Contracts\Participant;
 use Nncodes\Meeting\Contracts\Presenter;
 use Nncodes\Meeting\Contracts\Scheduler;
 use Nncodes\Meeting\MeetingAdder;
@@ -40,6 +41,7 @@ trait ManipulatesMeeting
     /**
      * Undocumented function
      *
+     * @todo throw an exception when startTime is less then now
      * @param \Carbon\Carbon $startTime
      * @return self
      */
@@ -47,8 +49,8 @@ trait ManipulatesMeeting
     {
         $now = now();
 
-        if ($startTime->lessThanOrEqualTo($now)) {
-            //@todo exception startTime cannot be less than now
+        if ($startTime->lessThan($now)) {
+            
         }
 
         $this->start_time = $startTime;
@@ -71,14 +73,14 @@ trait ManipulatesMeeting
 
     /**
      * Undocumented function
-     *
+     * 
+     * @todo check prevent concurrences 
      * @param \Nncodes\Meeting\Contracts\Host $host
      * @return self
      */
     public function updateHost(Host $host): self
-    {
+    {   
         $this->host()->associate($host);
-        $this->save();
 
         return $this;
     }
@@ -86,6 +88,7 @@ trait ManipulatesMeeting
     /**
      * Undocumented function
      *
+     * @todo check prevent concurrences 
      * @param \Nncodes\Meeting\Contracts\Presenter $presenter
      * @return self
      */
@@ -99,6 +102,7 @@ trait ManipulatesMeeting
     /**
      * Undocumented function
      *
+     * @todo check prevent concurrences 
      * @param \Nncodes\Meeting\Contracts\Scheduler $scheduler
      * @return self
      */
@@ -157,6 +161,26 @@ trait ManipulatesMeeting
         $this->instance->canceled($this);
 
         return $deleted;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return mixed
+     */
+    public function getPresenterAccess()
+    {
+        return $this->instance->getPresenterAccess($this);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return mixed
+     */
+    public function getParticipantAccess(Participant $participant)
+    {
+        return $this->instance->getParticipantAccess($this, $participant);
     }
 
     /**
