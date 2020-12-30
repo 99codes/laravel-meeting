@@ -16,7 +16,7 @@ use App\Models\Teacher;
 $meeting = Meeting::schedule()
   	->withTopic('English class: verb to be')
   	->startingAt(now()->addMinutes(30))
-  	->during(40) //minutes
+  	->during(40) //in Minutes
   	->scheduledBy(Event::find(1))
   	->presentedBy(Teacher::find(1))
   	->hostedBy(MeetingRoom::find(1))
@@ -41,10 +41,11 @@ The package will automatically register itself.
 You can publish and run the migrations with:
 
 ```bash
+php artisan vendor:publish --provider="Nncodes\MetaAttributes\MetaAttributesServiceProvider" --tag="migrations"
 php artisan vendor:publish --provider="Nncodes\Meeting\MeetingServiceProvider" --tag="migrations"
 ```
 
-After the migration has been published you can create the media-table by running the migrations:
+After the migration has been published you can create the tables by running the migrations:
 
 ```bash
 php artisan migrate
@@ -77,27 +78,34 @@ This is the contents of the published config file:
     'zoom' => [
 
          /**
-         * 
+         * Provider class
          **/
         'type' => \Nncodes\Meeting\Providers\Zoom\ZoomProvider::class,
 
         /**
-         * 
+         * JWT Zoom Token 
+         * @see https://marketplace.zoom.us/docs/guides/auth/jwt
          **/
         'jwt_token' => env('ZOOM_TOKEN'),
 
         /**
+         * Zoom Group ID
          * 
+         * @see https://marketplace.zoom.us/docs/api-reference/zoom-api/groups/group
          **/
         'group_id' => env('ZOOM_GROUP'),
 
          /**
+         * Share Rooms
          * 
+         * Delegate to the package the responsability of handling the allocations of rooms.
          **/
         'share_rooms' => true,
 
          /**
+         * Meeting resource seetings
          * 
+         * @see https://marketplace.zoom.us/docs/api-reference/zoom-api/meetings/meeting
          **/
         'meeting_settings' => [
             "host_video" => false,
