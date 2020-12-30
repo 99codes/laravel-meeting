@@ -73,7 +73,6 @@ trait ManipulatesMeeting
     /**
      * Undocumented function
      *
-     * @todo check prevent concurrences
      * @param \Nncodes\Meeting\Contracts\Host $host
      * @return self
      */
@@ -87,7 +86,6 @@ trait ManipulatesMeeting
     /**
      * Undocumented function
      *
-     * @todo check prevent concurrences
      * @param \Nncodes\Meeting\Contracts\Presenter $presenter
      * @return self
      */
@@ -101,7 +99,6 @@ trait ManipulatesMeeting
     /**
      * Undocumented function
      *
-     * @todo check prevent concurrences
      * @param \Nncodes\Meeting\Contracts\Scheduler $scheduler
      * @return self
      */

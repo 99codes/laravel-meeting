@@ -179,15 +179,15 @@ class MeetingAdder implements Arrayable
     /**
      * Undocumented function
      *
-     * @param array $concurrences
+     * @param array $settings
      * @throws  \Nncodes\Meeting\Exceptions\BusyForTheMeeting
      * @return void
      */
-    protected function preventConcurrences(array $concurrences)
+    protected function preventConcurrent(array $settings)
     {
         $endTime = (clone $this->startTime)->addMinutes($this->duration);
 
-        foreach ($concurrences as $relation => $allowed) {
+        foreach ($settings as $relation => $allowed) {
             if (! $allowed && isset($this->{$relation})
                 && $this->{$relation}->isBusyBetween($this->startTime, $endTime)
             ) {
@@ -205,8 +205,8 @@ class MeetingAdder implements Arrayable
     {
         $this->provider->scheduling($this);
 
-        $this->preventConcurrences(
-            config('meeting.allow_concurrence_meetings', [])
+        $this->preventConcurrent(
+            config('meeting.allow_concurrent_meetings', [])
         );
 
         $meeting = new Models\Meeting([

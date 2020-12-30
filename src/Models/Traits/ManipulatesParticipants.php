@@ -57,7 +57,7 @@ trait ManipulatesParticipants
             throw \Nncodes\Meeting\Exceptions\ParticipantAlreadyAdded::create($participant, $this);
         }
 
-        if (! config('meeting.allow_concurrence_meetings.participant')
+        if (! config('meeting.allow_concurrent_meetings.participant')
             && $participant->isBusyBetween($this->start_time, $this->end_time)
         ) {
             throw BusyForTheMeeting::createForParticipant($this, $participant);

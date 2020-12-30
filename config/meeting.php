@@ -40,9 +40,9 @@ return [
     ],
 
     /**
-     * Allow Concurrence Meetings
+     * Allow concurrent Meetings
      */
-    'allow_concurrence_meetings' => [
+    'allow_concurrent_meetings' => [
         'host' => false,
         'participant' => false,
         'presenter' => false,
