@@ -11,6 +11,15 @@ class MeetingRoom extends Model implements Host
 {
     use SoftDeletes;
     use HostsMeetings;
+
+    /**
+    * The attributes that should be cast to native types.
+    *
+    * @var array
+    */
+    protected $casts = [
+        'uuid' => 'string',
+    ];
     
     /**
      * The attributes that are mass assignable.

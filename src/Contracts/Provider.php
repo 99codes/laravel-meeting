@@ -45,4 +45,8 @@ interface Provider
     public function participantLeaving(ParticipantPivot $participant): void;
 
     public function participantLeft(ParticipantPivot $participant): void;
+
+    public function getPresenterAccess(Meeting $meeting);
+
+    public function getParticipantAccess(Meeting $meeting, Participant $participant);
 }

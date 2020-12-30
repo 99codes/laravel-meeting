@@ -18,6 +18,27 @@ interface Participant
     public function meetings(): MorphToMany;
 
     /**
+     * Email Address of the participant
+     *
+     * @return string
+     */
+    public function getParticipantEmailAddress(): string;
+
+    /**
+     * First name of the participant
+     *
+     * @return string
+     */
+    public function getParticipantFirstName(): string;
+
+    /**
+     * Last name of the participant
+     *
+     * @return string
+     */
+    public function getParticipantLastName(): string;
+
+    /**
      * Undocumented function
      *
      * @param \Nncodes\Meeting\Models\Meeting $meeting

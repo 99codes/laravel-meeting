@@ -1,13 +1,35 @@
 # Laravel Meeting
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/nncodes/laravel-meeting.svg?style=flat-square)](https://packagist.org/packages/nncodes/laravel-meeting)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/99codes/laravel-meeting/run-tests?label=tests)](https://github.com/nncodes/laravel-meeting/actions?query=workflow%3ATests+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/nncodes/laravel-meeting.svg?style=flat-square)](https://packagist.org/packages/nncodes/laravel-meeting)
 
+## Introduction
 
-Handle any kind of meeting with Laravel
+This package can handle online meetings with Eloquent models. It provides a simple, fluent API to work with and by default uses Zoom as provider.
 
-## Installation
+```php
+use Nncodes\Meeting\Models\Meeting;
+use Nncodes\Meeting\Models\MeetingRoom;
+use App\Models\Event;
+use App\Models\Teacher;
+
+$meeting = Meeting::schedule()
+  	->withTopic('English class: verb to be')
+  	->startingAt(now()->addMinutes(30))
+  	->during(40) //minutes
+  	->scheduledBy(Event::find(1))
+  	->presentedBy(Teacher::find(1))
+  	->hostedBy(MeetingRoom::find(1))
+  	->save();
+```
+
+### Requirements
+
+This package requires PHP 7.3+ and Laravel 6+.
+
+This package uses [`nncodes/meta-attributes`](https://github.com/99codes/laravel-meta-attributes) to attach meta attributes to the models.
+
+### Installation & setup
 
 You can install the package via composer:
 
@@ -15,10 +37,16 @@ You can install the package via composer:
 composer require nncodes/laravel-meeting
 ```
 
+The package will automatically register itself.
 You can publish and run the migrations with:
 
 ```bash
 php artisan vendor:publish --provider="Nncodes\Meeting\MeetingServiceProvider" --tag="migrations"
+```
+
+After the migration has been published you can create the media-table by running the migrations:
+
+```bash
 php artisan migrate
 ```
 
@@ -30,113 +58,574 @@ php artisan vendor:publish --provider="Nncodes\Meeting\MeetingServiceProvider" -
 This is the contents of the published config file:
 
 ```php
-namespace App;
+/**
+ * Default Meeting Provider
+ * 
+ * Here you can specify which meeting provider the package should use by 
+ * default. Of course you may use many providers at once using the package.
+ */
+'default' => env('MEETING_PROVIDER', 'zoom'),
 
-use Carbon\Carbon;
-use Nncodes\Meeting\Models\Meeting;
+/**
+ * Meeting Providers
+ * 
+ * Here are each of the meetings provider setup for the package.
+ */
 
-$from = Carbon::now()->sub('15 days');
-$to = Carbon::now()->add('15 days');
+'providers' => [
 
-$student = Student::first();
-$address = Address::first();
-$teacher = Teacher::first();
-$event = Event::first();
+    'zoom' => [
 
+         /**
+         * 
+         **/
+        'type' => \Nncodes\Meeting\Providers\Zoom\ZoomProvider::class,
 
-//Schedule a meeting from meeting model
-// Meeting::schedule()
-//   	->withTopic($event->topic)
-//   	->startingAt($event->starts_at)
-//   	->during(rand(20, 60))
-//   	->scheduledBy($event)
-//   	->presentedBy($teacher)
-//   	->hostedBy($address)
-//   	->save()
+        /**
+         * 
+         **/
+        'jwt_token' => env('ZOOM_TOKEN'),
 
-$meeting = Meeting::find(1)->start_time->utc()->format('Y-m-d\TH:i:se');
+        /**
+         * 
+         **/
+        'group_id' => env('ZOOM_GROUP'),
 
-// //Schedule a meeting from scheduler model
-// $event->scheduleMeeting()
-//   	->withTopic($event->topic)
-//   	->startingAt($event->starts_at)
-//   	->during(rand(20, 60))
-//   	->presentedBy($teacher)
-//   	->hostedBy($address)
-//   	->save()
+         /**
+         * 
+         **/
+        'share_rooms' => true,
 
+         /**
+         * 
+         **/
+        'meeting_settings' => [
+            "host_video" => false,
+            "participant_video" => false,
+            "join_before_host" => false,
+            "jbh_time" => 0,
+            "mute_upon_entry" => true,
+            "approval_type" => 0,
+            "registration_type" => 1,
+            "close_registration" => true,
+            "waiting_room" => true,
+            "registrants_confirmation_email" => false,
+            "registrants_email_notification" => false,
+            "meeting_authentication" => false
+        ]
+    ]
+],
 
-
-// // //Updating a meeting.
-// $meeting->updateTopic('Introducing Yourself')
-//   	->updateDuration(60)
-//   	->updateStartTime(now())
-//   	->updateScheduler(Event::find(1))
-//   	->updatePresenter(Teacher::find(5))
-//   	->updateHost(Address::find(1))
-//   	->save();
-  
-// //Retrieves a collection of meetings. Works for any actor.
-// //In meeting model use Meeting:query()->presenter...
-
-// $meeting = $address->meetings()
-//   	->presenter(Teacher::find(5))
-//   	->scheduler(Event::find(1))
-//   	->provider('starter')
-//   	->startsFrom($from)
-//   	->startsUntil($to)
-//   	//or ->startsBetween($from, $to)
-//   	->first();
-
-// //Retrieving the next meeting using meeting model
-// $meeting = Meeting::scheduled()->orderBy('start_time', 'asc')->first();
-// //Or
-// $meeting = Meeting::next()->firstOrFail();
-
-// //Starting a Meeting
-// $meeting->start();
-
-// //Adding a participant to a meeting
-// $meeting->addParticipant($student);
-// $meeting->joinParticipant($student);
-// $meeting->leaveParticipant($student);
-// $meeting->cancelParticipation($student);
-
-// //Or
-// $student->bookMeeting($meeting);
-// $student->joinMeeting($meeting);
-// $student->leaveMeeting($meeting);
-// $student->cancelMeetingParticipation($meeting);
-
-// //Ending a meeting
-// $meeting->end();
-
-// //Cancel a meeting
-// $meeting->cancel();
-
-// //Retrieving the last meeting using meeting model
-// $meeting = Meeting::past()->orderBy('started_at', 'desc')->first();
-// //Or
-// $meeting = Meeting::last()->firstOrFail();
-
-// //Retrieving the live meetings using meeting model
-// $liveMeetings = Meeting::live()->get();
-
-// //all scopes methods works inside the relations. Eg.
-$scheduler->meetings()->live()->first();
-$host->meetings()->past->get();
-$presenter->meetings()->scheduled()->first();
-$participant->meetings()->next()->first();
-
+/**
+ * Allow concurrent Meetings
+ */
+'allow_concurrent_meetings' => [
+    'host' => false,
+    'participant' => false,
+    'presenter' => false,
+    'scheduler' => true,
+]
 ```
 
-## Usage
+## Preparing your models
+
+**Scheduler**: responsible for scheduling the meeting, the model must implement the following interface and trait:
+
+```php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Nncodes\Meeting\Concerns\SchedulesMeetings;
+use Nncodes\Meeting\Contracts\Scheduler;
+
+class Event extends Model implements Scheduler
+{
+    use SchedulesMeetings;
+}
+```
+
+**Presenter**: responsible for present the meeting, the model must implement the following interface and trait:
+
+```php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Nncodes\Meeting\Concerns\PresentsMeetings;
+use Nncodes\Meeting\Contracts\Presenter;
+
+class Teacher extends User implements Presenter
+{
+    use PresentsMeetings;
+}
+```
+
+**Host**: responsible for hosting the meeting, the model must implement the following interface and trait:
+
+```php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Nncodes\Meeting\Concerns\HostsMeetings;
+use Nncodes\Meeting\Contracts\Host;
+
+class Room extends Model implements Host
+{
+    use HostsMeetings;
+}
+```
+
+**Participant**: allowed to join a meeting, the model must implement the following interface, trait and the `getEmailAddress`, `getFirstName` and `getLastName` methods:
+
+```php
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Nncodes\Meeting\Concerns\JoinsMeetings;
+use Nncodes\Meeting\Contracts\Participant;
+
+class Student extends User implements Participant
+{
+    use JoinsMeetings;
+
+    /**
+     * Email Address of the participant
+     *
+     * @return string
+     */
+    public function getParticipantEmailAddress(): string
+    {
+        return $this->email;
+    }
+
+    /**
+     * First name of the participant
+     *
+     * @return string
+     */
+    public function getParticipantFirstName(): string
+    {
+        return $this->first_name;
+    }
+
+    /**
+     * Last name of the participant
+     *
+     * @return string
+     */
+    public function getParticipantLastName(): string
+    {
+        return $this->last_name;
+    }
+}
+```
+
+### Scheduling a meeting
+
+To schedule a meeting you need to use the methods below to properly fill the meeting data:
+
+```php
+use Nncodes\Meeting\Models\Meeting;
+use App\Models\Event;
+use App\Models\Teacher;
+use App\Models\Room;
+
+$event = Event::find(1);
+$teacher = Teacher::find(1);
+$room = Room::find(1);
+
+$meeting = Meeting::schedule()
+  	->withTopic('English class: verb to be')
+  	->startingAt(now()->addMinutes(30))
+  	->during(40) //minutes
+  	->scheduledBy($event)
+  	->presentedBy($teacher)
+  	->hostedBy($room)
+  	->save();
+```
+
+Or you can also schedule by the `scheduler` model:
+
+```php
+use Nncodes\Meeting\Models\Meeting;
+use App\Models\Event;
+use App\Models\Teacher;
+use App\Models\Room;
+
+$event->scheduleMeeting()
+  	->withTopic('English class: verb to be')
+  	->startingAt(now()->addMinutes(30))
+  	->during(40) //minutes
+  	->presentedBy($teacher)
+  	->hostedBy($room)
+  	->save()
+```
+
+Of course if needed, you can update the meeting: 
+
+```php
+use Nncodes\Meeting\Models\Meeting;
+use App\Models\Event;
+use App\Models\Teacher;
+use App\Models\Room;
+
+$meeting = Meeting::find(1);
+
+$meeting->updateTopic('English class: Introducing Yourself')
+    ->updateDuration(60)
+    ->updateStartTime(now())
+    ->updateScheduler(Event::find(1))
+    ->updatePresenter(Teacher::find(5))
+    ->updateHost(Room::find(1))
+    ->save();
+```
+
+Then you can add a participant:
+
+```php
+use Nncodes\Meeting\Models\Meeting;
+use App\Models\Student;
+
+$meeting = Meeting::find(1);
+$student = Student::find(1);
+
+//By the meeting model
+$meeting->addParticipant($student);
+
+//Or by the participant model 
+$student->bookMeeting($meeting);
+```
+
+To provide the access to the presenter use:
+
+```php
+use Nncodes\Meeting\Models\Meeting;
+
+Meeting::find(1)->getPresenterAccess();
+```
+
+And for the participant use:
+
+```php
+use Nncodes\Meeting\Models\Meeting;
+use App\Models\Student;
+
+$student = Student::find(1);
+
+Meeting::find(1)>getParticipantAccess($student);
+```
+
+More: [handling a scheduled meeting](#handling-a-scheduled-meeting).
+
+### Retrieving meetings using scoped queries
+
+#### You can just call from the meeting model
+
+Scoping meetings by `Nncodes\Meeting\Models\Meeting`.
+```php
+$query = Meeting::query();
+```
+
+#### Or call `meetings()` from any actor:
+
+Scoping meetings from scheduler model, e.g. `App\Models\Event` with `id:1`.
+```php
+$query = Event::find(1)->meetings();
+```
+
+Scoping meetings from presenter model, e.g. `App\Models\Teacher` with `id:1`.
+```php
+$query = Teacher::find(1)->meetings();
+```
+
+Scoping meetings from host model, e.g. `App\Models\Room` with `id:1`.
+```php
+$query = Room::find(1)->meetings();
+```
+
+Scoping meetings from participant model, e.g. `App\Models\Student` with `id:1`.
+```php
+$query = Student::find(1)->meetings();
+```
+
+#### And then use the eloquent scope methods available
+
+##### General scopes
+
+scoping by `uuid`, e.g `b33cac3a-c8da-4b33-a296-30a6acff5af6`.
+```php
+$query->byUuid('b33cac3a-c8da-4b33-a296-30a6acff5af6');
+```
+
+scoping by `id`, e.g `1`.
+```php
+$query->byId(1);
+```
+
+scoping by provider, e.g. `zoom`.
+```php
+$query->provider('zoom');
+```
+
+##### Scopes for `start_time`, `started_at` and `ended_at`
+
+scoping by start time from, e.g. `15 days ago`.
+```php
+$query->startsFrom(Carbon::now()->sub('15 days'));
+```
+
+scoping by start time until, e.g. `15 days from now`.
+```php
+$query->startsUntil(Carbon::now()->add('15 days'));
+```
+
+Or scoping by start time within a period, e.g. from `15 days ago` and `15 days from now`.
+```php
+$query->startsBetween(
+    Carbon::now()->sub('15 days'),
+    Carbon::now()->add('15 days')
+);
+```
+
+scoping by status `live`, the started but not ended meetings.
+```php
+$query->live();
+```
+
+scoping by status `past`, the started and ended meetings.
+```php
+$query->past();
+```
+
+scoping by status `scheduled`, the not started meetings.
+```php
+$query->scheduled();
+```
+
+scoping by `scheduled` status ordering by `start_time` asc.
+```php
+$query->next();
+```
+
+scoping by `last` status ordering by `ended_at` desc.
+```php
+$query->last();
+```
+
+##### Scope for actors
+
+scoping by scheduler, e.g. `App\Models\Event` with `id:1`.
+```php
+$query->scheduler(Event::find(1));
+```
+
+scoping by host, e.g. `App\Models\Room` with `id:1`.
+```php
+$query->host(Room::find(1));
+```
+
+scoping by participant, e.g. `App\Models\Student` with `id:1`.
+```php
+$query->participant(Student::find(1));
+```
+
+scoping by presenter, e.g. `App\Models\Teacher` with `id:1`.
+```php
+$query->presenter(Teacher::find(1));
+```
+
+And finally to retrieve the data you can call any eloquent retriever method, e.g. `count`, `first`, `get`, `paginate` and etc.
 
 
-## Testing
+### Handling a scheduled meeting
 
-```bash
-composer test
+#### Meeting
+
+When using zoom provider, you can set `share_rooms` to `true`, then you don't need to inform a host when scheduling a meeting. The package handles the allocation of rooms.
+
+In this case you can schedule using: 
+
+```php
+use Nncodes\Meeting\Models\Meeting;
+use App\Models\Event;
+use App\Models\Teacher;
+
+$meeting = Meeting::schedule()
+  	->withTopic('English class: verb to be')
+  	->startingAt(now()->addMinutes(30))
+  	->during(40) //minutes
+  	->scheduledBy(Event::find(1))
+  	->presentedBy(Teacher::find(1))
+  	->save();
+```
+
+If no rooms is available the expcetion `\Nncodes\Meeting\Exceptions\NoZoomRoomAvailable` is thrown.
+
+```php 
+use Nncodes\Meeting\Models\Meeting;
+```
+
+Starting a meeting.
+```php
+Meeting::find(1)->start();
+```
+
+Ending a meeting.
+```php
+Meeting::find(1)->end();
+```
+
+Canceling a meeting.
+```php
+Meeting::find(1)->cancel();
+```
+
+#### Participants
+
+##### Add a participant
+
+Adding a participant by `Nncodes\Meeting\Models\Meeting`
+```php
+Meeting::find(1)->start();
+```
+
+Adding a participant by participant model `App\Models\Student`
+```php
+$meeting = Meeting::find(1);
+Student::find(1)->bookMeeting($meeting);
+```
+
+##### Cancel a participation
+
+Canceling a participation by `Nncodes\Meeting\Models\Meeting`
+```php
+$student = Student::find(1);
+Meeting::find(1)->cancelParticipation($student);
+```
+
+Adding a participant by participant model `App\Models\Student`
+```php
+$meeting = Meeting::find(1);
+Student::find(1)->cancelMeetingParticipation($meeting);
+```
+
+##### Join meeting
+
+Joining by `Nncodes\Meeting\Models\Meeting`
+```php
+$student = Student::find(1);
+Meeting::find(1)->joinParticipant($student);
+```
+
+Joining by participant model `App\Models\Student`
+```php
+$meeting = Meeting::find(1);
+Student::find(1)->joinMeeting($meeting);
+```
+
+##### Leave meeting
+
+Leaving by `Nncodes\Meeting\Models\Meeting`
+```php
+$student = Student::find(1);
+Meeting::find(1)->leaveParticipant($student);
+```
+
+Leaving by participant model `App\Models\Student`
+```php
+$meeting = Meeting::find(1);
+Student::find(1)->leaveMeeting($meeting);
+```
+
+##### Getting participants
+
+Getting a participant
+
+```php
+$student = Student::find(1);
+$participant = Meeting::find(1)->participant($student);
+```
+
+Checking if a meeting has a participant:
+
+```php
+$student = Student::find(1);
+$bool = Meeting::find(1)->hasParticipant($student);
+```
+
+Getting a list of participants using the morphMany relationship:
+
+```php
+//Must inform the participant model type
+$participants = Meeting::find(1)->participants(App\Models\Student::class)->get();
+```
+
+Or using the participantsPivot relation. 
+
+```php
+//Doesn't need to inform participant model type, it gets all types. 
+$participants = Meeting::find(1)->participantsPivot;
+```
+
+Getting the first participant ordering by `created_at` desc, it allows to use a meeting as queue mode service.
+```php
+$participant = Meeting::find(1)->getNextParticipant();
+```
+
+#### Hosts
+
+##### Scoping and verification methods
+
+Given the code: 
+
+```php
+use Nncodes\Meeting\Models\MeetingRoom;
+
+$startTime = Carbon::now()->addMinutes(30);
+$duration = 40;
+$endTime = (clone $startTime)->addMinutes($duration);
+```
+
+Scoping an available host:
+```php 
+MeetingRoom::availableBetween($startTime, $endTime);
+```
+
+Scoping a busy host:
+```php 
+MeetingRoom::busyBetween($startTime, $endTime);
+```
+
+Scoping busy and available hosts except for a meeting
+```php 
+use Nncodes\Meeting\Models\Meeting;
+
+$except = Meeting::find(1);
+
+MeetingRoom::availableBetween($startTime, $endTime, $except);
+MeetingRoom::busyBetween($startTime, $endTime, $except);
+```
+
+Then you can call any eloquent retriever method, e.g. `count`, `first`, `get`, `paginate` and etc.
+
+You can also check if a room instance is busy or available:
+
+```php 
+use Nncodes\Meeting\Models\MeetingRoom;
+
+MeetingRoom::find(1)->isAvailableBetween($startTime, $endTime);
+MeetingRoom::find(1)->isBusyBetween($startTime, $endTime);
+```
+
+As the scope methods, you can also specify meeting to exclude from the query:
+
+```php 
+use Nncodes\Meeting\Models\MeetingRoom;
+use Nncodes\Meeting\Models\Meeting;
+
+$except = Meeting::find(1);
+
+MeetingRoom::find(1)->isAvailableBetween($startTime, $endTime, $except);
+MeetingRoom::find(1)->isBusyBetween($startTime, $endTime, $except);
 ```
 
 ## Changelog

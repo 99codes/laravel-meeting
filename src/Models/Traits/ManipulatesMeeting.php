@@ -8,6 +8,7 @@ use Nncodes\Meeting\Contracts\Participant;
 use Nncodes\Meeting\Contracts\Presenter;
 use Nncodes\Meeting\Contracts\Scheduler;
 use Nncodes\Meeting\MeetingAdder;
+use Nncodes\Meeting\Models\Participant as ParticipantPivot;
 
 /**
  * Provides manipulation methods for meeting model
@@ -177,6 +178,19 @@ trait ManipulatesMeeting
     public function getParticipantAccess(Participant $participant)
     {
         return $this->instance->getParticipantAccess($this, $participant);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return \Nncodes\Meeting\Models\Participant: null
+     */
+    public function getNextParticipant(): ?ParticipantPivot
+    {
+        return $this->participantsPivot()
+                    ->whereNull('started_at')
+                    ->whereNull('ended_at')
+                    ->orderBy('created_at', 'desc');
     }
 
     /**
