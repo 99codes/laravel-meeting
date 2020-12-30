@@ -57,6 +57,6 @@ class ZoomProvider implements Provider
      */
     public function getParticipantAccess(Meeting $meeting, Participant $participant)
     {
-        return optional($meeting->getMetaValue('participant_' . $participant->id))->joinUrl;
+        return optional($meeting->participant($participant))->meta->joinUrl;
     }
 }
