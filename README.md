@@ -23,13 +23,13 @@ $meeting = Meeting::schedule()
   	->save();
 ```
 
-### Requirements
+## Requirements
 
 This package requires PHP 7.3+ and Laravel 6+.
 
 This package uses [`nncodes/meta-attributes`](https://github.com/99codes/laravel-meta-attributes) to attach meta attributes to the models.
 
-### Installation & setup
+## Installation & setup
 
 You can install the package via composer:
 
@@ -129,7 +129,9 @@ This is the contents of the published config file:
 
 ## Preparing your models
 
-**Scheduler**: responsible for scheduling the meeting, the model must implement the following interface and trait:
+### Scheduler 
+
+Responsible for scheduling the meeting, the model must implement the following interface and trait:
 
 ```php
 namespace App\Models;
@@ -144,7 +146,9 @@ class Event extends Model implements Scheduler
 }
 ```
 
-**Presenter**: responsible for present the meeting, the model must implement the following interface and trait:
+### Presenter
+
+Responsible for present the meeting, the model must implement the following interface and trait:
 
 ```php
 namespace App\Models;
@@ -159,7 +163,9 @@ class Teacher extends User implements Presenter
 }
 ```
 
-**Host**: responsible for hosting the meeting, the model must implement the following interface and trait:
+### Host
+
+Responsible for hosting the meeting, the model must implement the following interface and trait:
 
 ```php
 namespace App\Models;
@@ -174,7 +180,9 @@ class Room extends Model implements Host
 }
 ```
 
-**Participant**: allowed to join a meeting, the model must implement the following interface, trait and the `getEmailAddress`, `getFirstName` and `getLastName` methods:
+### Participant
+
+Allowed to join a meeting, the model must implement the following interface, trait and the `getEmailAddress`, `getFirstName` and `getLastName` methods:
 
 ```php
 namespace App\Models;
@@ -219,7 +227,7 @@ class Student extends User implements Participant
 }
 ```
 
-### Scheduling a meeting
+## Scheduling a meeting
 
 To schedule a meeting you need to use the methods below to properly fill the meeting data:
 
@@ -316,16 +324,16 @@ Meeting::find(1)>getParticipantAccess($student);
 
 More: [handling a scheduled meeting](#handling-a-scheduled-meeting).
 
-### Retrieving meetings using scoped queries
+## Retrieving meetings using scoped queries
 
-#### You can just call from the meeting model
+### You can just call from the meeting model
 
 Scoping meetings by `Nncodes\Meeting\Models\Meeting`.
 ```php
 $query = Meeting::query();
 ```
 
-#### Or call `meetings()` from any actor:
+### Or call `meetings()` from any actor:
 
 Scoping meetings from scheduler model, e.g. `App\Models\Event` with `id:1`.
 ```php
@@ -347,9 +355,9 @@ Scoping meetings from participant model, e.g. `App\Models\Student` with `id:1`.
 $query = Student::find(1)->meetings();
 ```
 
-#### And then use the eloquent scope methods available
+### And then use the eloquent scope methods available
 
-##### General scopes
+#### General scopes
 
 scoping by `uuid`, e.g `b33cac3a-c8da-4b33-a296-30a6acff5af6`.
 ```php
@@ -366,7 +374,7 @@ scoping by provider, e.g. `zoom`.
 $query->provider('zoom');
 ```
 
-##### Scopes for `start_time`, `started_at` and `ended_at`
+#### Scopes for `start_time`, `started_at` and `ended_at`
 
 scoping by start time from, e.g. `15 days ago`.
 ```php
@@ -411,7 +419,7 @@ scoping by `last` status ordering by `ended_at` desc.
 $query->last();
 ```
 
-##### Scope for actors
+#### Scope for actors
 
 scoping by scheduler, e.g. `App\Models\Event` with `id:1`.
 ```php
@@ -436,9 +444,9 @@ $query->presenter(Teacher::find(1));
 And finally to retrieve the data you can call any eloquent retriever method, e.g. `count`, `first`, `get`, `paginate` and etc.
 
 
-### Handling a scheduled meeting
+## Handling a scheduled meeting
 
-#### Meeting
+### Meeting
 
 When using zoom provider, you can set `share_rooms` to `true`, then you don't need to inform a host when scheduling a meeting. The package handles the allocation of rooms.
 
@@ -479,9 +487,9 @@ Canceling a meeting.
 Meeting::find(1)->cancel();
 ```
 
-#### Participants
+### Participants
 
-##### Add a participant
+#### Add a participant
 
 Adding a participant by `Nncodes\Meeting\Models\Meeting`
 ```php
@@ -494,7 +502,7 @@ $meeting = Meeting::find(1);
 Student::find(1)->bookMeeting($meeting);
 ```
 
-##### Cancel a participation
+#### Cancel a participation
 
 Canceling a participation by `Nncodes\Meeting\Models\Meeting`
 ```php
@@ -508,7 +516,7 @@ $meeting = Meeting::find(1);
 Student::find(1)->cancelMeetingParticipation($meeting);
 ```
 
-##### Join meeting
+#### Join meeting
 
 Joining by `Nncodes\Meeting\Models\Meeting`
 ```php
@@ -571,9 +579,9 @@ Getting the first participant ordering by `created_at` desc, it allows to use a 
 $participant = Meeting::find(1)->getNextParticipant();
 ```
 
-#### Hosts
+### Hosts
 
-##### Scoping and verification methods
+#### Scoping and verification methods
 
 Given the code: 
 
