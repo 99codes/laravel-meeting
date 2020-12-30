@@ -60,7 +60,7 @@ class NoZoomRoomAvailable extends \Exception
             $meeting->startTime->format('Y-m-d H:i:se'),
             (clone $meeting->startTime)->addMinutes($meeting->duration)->format('Y-m-d H:i:se'),
             $meeting->topic
-        );        
+        );
     }
 
     /**
@@ -72,5 +72,4 @@ class NoZoomRoomAvailable extends \Exception
     {
         return $this->meeting;
     }
-
 }

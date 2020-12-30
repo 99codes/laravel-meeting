@@ -25,14 +25,14 @@ trait HostsMeetings
         return  $this->morphMany(Meeting::class, 'host')->with('scheduler', 'presenter');
     }
 
-   /**
-    * Undocumented function
-    *
-    * @param \Carbon\Carbon $start
-    * @param \Carbon\Carbon $end
-    * @param \Nncodes\Meeting\Models\Meeting|null $except
-    * @return \Nncodes\Meeting\Contracts\Host|null
-    */
+    /**
+     * Undocumented function
+     *
+     * @param \Carbon\Carbon $start
+     * @param \Carbon\Carbon $end
+     * @param \Nncodes\Meeting\Models\Meeting|null $except
+     * @return \Nncodes\Meeting\Contracts\Host|null
+     */
     public static function findAvailable(Carbon $start, Carbon $end, ?Meeting $except = null): ?Host
     {
         return static::availableBetween($start, $end, $except)->inRandomOrder()->first();

@@ -11,28 +11,28 @@ use Nncodes\Meeting\Models\Meeting;
  */
 trait VerifiesAvailability
 {
-   /**
-    * Undocumented function
-    *
-    * @param \Illuminate\Database\Eloquent\Builder $query
-    * @param \Carbon\Carbon $start
-    * @param \Carbon\Carbon $end
-    * @param \Nncodes\Meeting\Models\Meeting|null $except
-    * @return \Illuminate\Database\Eloquent\Builder
-    */
+    /**
+     * Undocumented function
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Carbon\Carbon $start
+     * @param \Carbon\Carbon $end
+     * @param \Nncodes\Meeting\Models\Meeting|null $except
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function scopeAvailableBetween(Builder $query, Carbon $start, Carbon $end, ?Meeting $except = null): Builder
     {
-        return $query->whereDoesntHave('meetings', function($query) use($start, $end, $except){
-
-            if($except){
+        return $query->whereDoesntHave('meetings', function ($query) use ($start, $end, $except) {
+            if ($except) {
                 $query->where('id', '<>', $except->id);
             }
 
-            $query->where(function($query) use($start, $end, $except){
+            $query->where(function ($query) use ($start, $end, $except) {
                 $query->where(
-                    fn($q) => $q->startsBetween($start, $end))
+                    fn ($q) => $q->startsBetween($start, $end)
+                )
                 ->orWhere(
-                    fn($q) => $q->endsBetween($start, $end)
+                    fn ($q) => $q->endsBetween($start, $end)
                 );
             });
         });
@@ -49,17 +49,17 @@ trait VerifiesAvailability
      */
     public function scopeBusyBetween(Builder $query, Carbon $start, Carbon $end, ?Meeting $except = null): Builder
     {
-        return $query->whereHas('meetings', function($query) use($start, $end, $except){
-
-            if($except){
+        return $query->whereHas('meetings', function ($query) use ($start, $end, $except) {
+            if ($except) {
                 $query->where('id', '<>', $except->id);
             }
 
-            $query->where(function($query) use($start, $end, $except){
+            $query->where(function ($query) use ($start, $end, $except) {
                 $query->where(
-                    fn($q) => $q->startsBetween($start, $end))
+                    fn ($q) => $q->startsBetween($start, $end)
+                )
                 ->orWhere(
-                    fn($q) => $q->endsBetween($start, $end)
+                    fn ($q) => $q->endsBetween($start, $end)
                 );
             });
         });
@@ -71,21 +71,21 @@ trait VerifiesAvailability
      * @param \Carbon\Carbon $start
      * @param \Carbon\Carbon $end
      * @param \Nncodes\Meeting\Models\Meeting|null $except
-     * @return boolean
+     * @return bool
      */
     public function isAvailableBetween(Carbon $start, Carbon $end, ?Meeting $except = null): bool
     {
         return get_class($this)::where('id', $this->id)->availableBetween($start, $end, $except)->count() > 0;
     }
 
-   /**
-    * Undocumented function
-    *
-    * @param \Carbon\Carbon $start
-    * @param \Carbon\Carbon $end
-    * @param \Nncodes\Meeting\Models\Meeting|null $except
-    * @return boolean
-    */
+    /**
+     * Undocumented function
+     *
+     * @param \Carbon\Carbon $start
+     * @param \Carbon\Carbon $end
+     * @param \Nncodes\Meeting\Models\Meeting|null $except
+     * @return bool
+     */
     public function isBusyBetween(Carbon $start, Carbon $end, ?Meeting $except = null): bool
     {
         return get_class($this)::where('id', $this->id)->busyBetween($start, $end, $except)->count() > 0;

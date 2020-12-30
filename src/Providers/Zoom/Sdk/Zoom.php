@@ -6,14 +6,14 @@ use Closure;
 
 class Zoom
 {
-    use Support\MakesHttpRequests,
-        Actions\ManagesRoles,
-        Actions\ManagesUsers,
-        Actions\ManagesMeetings,
-        Actions\ManagesPastMeetings,
-        Actions\ManagesRecordingFiles,
-        Actions\ManagesAccounts,
-        Actions\ManagesGroups;
+    use Support\MakesHttpRequests;
+    use Actions\ManagesRoles;
+    use Actions\ManagesUsers;
+    use Actions\ManagesMeetings;
+    use Actions\ManagesPastMeetings;
+    use Actions\ManagesRecordingFiles;
+    use Actions\ManagesAccounts;
+    use Actions\ManagesGroups;
 
     /**
      * The Guzzle HTTP Client instance.

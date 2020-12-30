@@ -2,13 +2,12 @@
 
 namespace Nncodes\Meeting\Providers\Zoom\Commands;
 
-use Illuminate\Support\Str;
-use Illuminate\Support\Arr;
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Nncodes\Meeting\Models\MeetingRoom;
 use Nncodes\Meeting\Providers\Zoom\Sdk\Zoom;
-
 
 class SyncUsersCommand extends Command
 {
@@ -34,8 +33,7 @@ class SyncUsersCommand extends Command
     public function handle(Zoom $api)
     {
         try {
-
-            if( !$zoomGroupId = $this->option('group') ){
+            if (! $zoomGroupId = $this->option('group')) {
                 $zoomGroupId = config('meeting.providers.zoom.group_id');
             }
             
@@ -45,22 +43,21 @@ class SyncUsersCommand extends Command
 
             $updates = collect();
 
-            $deletableUsers->each(function($user) use($updates){
+            $deletableUsers->each(function ($user) use ($updates) {
                 $user->status = 'deleted';
                 $user->delete();
 
                 $updates->push($user);
-            });   
+            });
 
-            foreach( $users->all() as $user ){
-
+            foreach ($users->all() as $user) {
                 $room = MeetingRoom::updateOrCreate(
                     ['uuid' => $user->id],
                     [
                         'name' => $user->firstName . ' ' . $user->lastName,
                         'email' => $user->email,
                         'type' => $user->type,
-                        'group' => $zoomGroupId
+                        'group' => $zoomGroupId,
                     ]
                 );
 
@@ -71,9 +68,8 @@ class SyncUsersCommand extends Command
             $this->log($updates, 'created');
             $this->log($updates, 'updated');
             $this->log($updates, 'deleted');
-
         } catch (\Throwable $th) {
-           $this->error($th->getMessage());
+            $this->error($th->getMessage());
         }
     }
 
@@ -95,20 +91,18 @@ class SyncUsersCommand extends Command
 
         $items = $updates->where('status', $type);
 
-        if($items->count()){
-
+        if ($items->count()) {
             $this->info(sprintf(
-                $messagePattern, 
+                $messagePattern,
                 $items->count(),
-                Str::plural('user', $items->count()), 
+                Str::plural('user', $items->count()),
                 $type
             ));
             
             $this->table(
-                $headers, 
-                $items->map(fn($user) => $user->only($tableKeys))->toArray()
+                $headers,
+                $items->map(fn ($user) => $user->only($tableKeys))->toArray()
             );
         }
-
     }
 }

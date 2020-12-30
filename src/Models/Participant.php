@@ -18,7 +18,7 @@ class Participant extends MorphPivot
      */
     protected $table = 'meeting_participants';
 
-        /**
+    /**
      * The primary key for the model.
      *
      * @var string

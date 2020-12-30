@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Nncodes\Meeting\Providers\Zoom\Concerns;
 
@@ -13,7 +13,7 @@ trait InteractsWithZoom
      * @param string $userId
      * @param string $topic
      * @param \Carbon\Carbon $startTime
-     * @param integer $duration
+     * @param int $duration
      * @return \Nncodes\Meeting\Providers\Zoom\Sdk\Resources\Meeting
      */
     public function createZoomMeeting(string $userId, string $topic, Carbon $startTime, int $duration): Meeting
@@ -24,17 +24,17 @@ trait InteractsWithZoom
             'start_time' => $startTime->format('Y-m-d\TH:i:s'),
             'duration' => $duration,
             'timezone' => $startTime->format('e'),
-            'settings' => $this->getZoomMeetingDefaultSettings()
+            'settings' => $this->getZoomMeetingDefaultSettings(),
         ]);
     }
 
     /**
      * Undocumented function
      *
-     * @param integer $meetingId
+     * @param int $meetingId
      * @param string $topic
      * @param \Carbon\Carbon $startTime
-     * @param integer $duration
+     * @param int $duration
      * @return void
      */
     public function updateZoomMeeting(int $meetingId, string $topic, Carbon $startTime, int $duration): void
@@ -45,7 +45,7 @@ trait InteractsWithZoom
             'start_time' => $startTime->format('Y-m-d\TH:i:s'),
             'duration' => $duration,
             'timezone' => $startTime->format('e'),
-            'settings' => config('meeting.providers.zoom.meeting_settings', [])
+            'settings' => config('meeting.providers.zoom.meeting_settings', []),
         ]);
     }
 }

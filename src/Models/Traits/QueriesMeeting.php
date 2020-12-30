@@ -120,14 +120,14 @@ trait QueriesMeeting
         ]);
     }
 
-     /**
-     * Scope a query to filter by start_time plus duration between dates
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param \Carbon\Carbon $start
-     * @param \Carbon\Carbon $end
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
+    /**
+    * Scope a query to filter by start_time plus duration between dates
+    *
+    * @param \Illuminate\Database\Eloquent\Builder $query
+    * @param \Carbon\Carbon $start
+    * @param \Carbon\Carbon $end
+    * @return \Illuminate\Database\Eloquent\Builder
+    */
     public function scopeEndsBetween(Builder $query, Carbon $start, Carbon $end): Builder
     {
         return $query->whereBetween(DB::raw('DATE_ADD('.$this->getTable().'.start_time, INTERVAL '.$this->getTable().'.duration MINUTE)'), [

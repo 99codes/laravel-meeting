@@ -14,13 +14,13 @@ class BusyForTheMeeting extends \Exception
      */
     protected MeetingAdder $meeting;
 
-   /**
-    * Undocumented function
-    *
-    * @param \Nncodes\Meeting\MeetingAdder $meeting
-    * @param string $relation
-    * @return self
-    */
+    /**
+     * Undocumented function
+     *
+     * @param \Nncodes\Meeting\MeetingAdder $meeting
+     * @param string $relation
+     * @return self
+     */
     public static function create(MeetingAdder $meeting, string $relation): self
     {
         return new static(
@@ -71,7 +71,7 @@ class BusyForTheMeeting extends \Exception
             (clone $meeting->startTime)->addMinutes($meeting->duration)->format('Y-m-d H:i:se'),
             $relation,
             $meeting->topic
-        );        
+        );
     }
 
     /**
@@ -83,5 +83,4 @@ class BusyForTheMeeting extends \Exception
     {
         return $this->meeting;
     }
-
 }

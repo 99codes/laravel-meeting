@@ -44,7 +44,7 @@ trait ManagesGroups
 
     /**
      * Delete a group member
-     * 
+     *
      * @param string $groupId Group Id.
      * @param string $memberId Member Id.
      * @return void

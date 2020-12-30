@@ -50,7 +50,6 @@ trait ManipulatesMeeting
         $now = now();
 
         if ($startTime->lessThan($now)) {
-            
         }
 
         $this->start_time = $startTime;
@@ -73,13 +72,13 @@ trait ManipulatesMeeting
 
     /**
      * Undocumented function
-     * 
-     * @todo check prevent concurrences 
+     *
+     * @todo check prevent concurrences
      * @param \Nncodes\Meeting\Contracts\Host $host
      * @return self
      */
     public function updateHost(Host $host): self
-    {   
+    {
         $this->host()->associate($host);
 
         return $this;
@@ -88,7 +87,7 @@ trait ManipulatesMeeting
     /**
      * Undocumented function
      *
-     * @todo check prevent concurrences 
+     * @todo check prevent concurrences
      * @param \Nncodes\Meeting\Contracts\Presenter $presenter
      * @return self
      */
@@ -102,7 +101,7 @@ trait ManipulatesMeeting
     /**
      * Undocumented function
      *
-     * @todo check prevent concurrences 
+     * @todo check prevent concurrences
      * @param \Nncodes\Meeting\Contracts\Scheduler $scheduler
      * @return self
      */

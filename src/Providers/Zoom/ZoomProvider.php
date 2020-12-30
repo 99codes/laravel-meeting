@@ -43,7 +43,7 @@ class ZoomProvider implements Provider
      */
     public function getPresenterAccess(Meeting $meeting)
     {
-        if($zoomMeetingId = $meeting->getMetaValue('zoom_id')){
+        if ($zoomMeetingId = $meeting->getMetaValue('zoom_id')) {
             return optional($this->api->meeting($zoomMeetingId))->startUrl;
         }
     }

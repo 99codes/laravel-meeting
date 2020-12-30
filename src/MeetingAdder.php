@@ -187,10 +187,10 @@ class MeetingAdder implements Arrayable
     {
         $endTime = (clone $this->startTime)->addMinutes($this->duration);
 
-        foreach( $concurrences as $relation => $allowed ){
-            if(!$allowed && isset($this->{$relation}) 
+        foreach ($concurrences as $relation => $allowed) {
+            if (! $allowed && isset($this->{$relation})
                 && $this->{$relation}->isBusyBetween($this->startTime, $endTime)
-            ){
+            ) {
                 throw BusyForTheMeeting::create($this, $relation);
             }
         }

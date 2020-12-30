@@ -1,23 +1,23 @@
-<?php 
+<?php
 
 namespace Nncodes\Meeting\Providers\Zoom\Concerns;
 
 use Nncodes\Meeting\Contracts\Participant;
+use Nncodes\Meeting\Events\MeetingCanceled;
 use Nncodes\Meeting\Events\MeetingScheduled;
 use Nncodes\Meeting\Events\MeetingUpdated;
-use Nncodes\Meeting\Events\MeetingCanceled;
 use Nncodes\Meeting\Events\ParticipantAdded;
 use Nncodes\Meeting\Events\ParticipationCanceled;
+use Nncodes\Meeting\Exceptions\NoZoomRoomAvailable;
 use Nncodes\Meeting\MeetingAdder;
 use Nncodes\Meeting\Models\Meeting;
 use Nncodes\Meeting\Models\MeetingRoom;
 use Nncodes\Meeting\Models\Participant as ParticipantPivot;
-use Nncodes\Meeting\Exceptions\NoZoomRoomAvailable;
 
 trait InteractsWithMeetings
 {
-    use InteractsWithZoom,
-        ProvidesSettings;
+    use InteractsWithZoom;
+    use ProvidesSettings;
 
     /**
      * Undocumented function
@@ -28,23 +28,23 @@ trait InteractsWithMeetings
      */
     public function scheduling(MeetingAdder $meeting): void
     {
-        if($this->shareRooms()){
+        if ($this->shareRooms()) {
             $endTime = (clone $meeting->startTime)->addMinutes($meeting->duration);
-            if( !$host = MeetingRoom::findAvailable($meeting->startTime, $endTime)){
+            if (! $host = MeetingRoom::findAvailable($meeting->startTime, $endTime)) {
                 throw NoZoomRoomAvailable::create($meeting);
             }
             $meeting->hostedBy($host);
         }
 
         $zoomMeeting = $this->createZoomMeeting(
-            $meeting->host->uuid, 
+            $meeting->host->uuid,
             $meeting->topic,
             $meeting->startTime,
             $meeting->duration
         );
 
         $meeting->withMetaAttributes([
-            'zoom_id' => $zoomMeeting->id
+            'zoom_id' => $zoomMeeting->id,
         ]);
     }
 
@@ -67,14 +67,13 @@ trait InteractsWithMeetings
      */
     public function updating(Meeting $meeting): void
     {
-        if( $meeting->isDirty() ){
-
-            if( $meeting->isDirty('start_time')
+        if ($meeting->isDirty()) {
+            if ($meeting->isDirty('start_time')
                 && $meeting->host->isBusyBetween($meeting->start_time, $meeting->end_time)
-            ){
-                if( $this->shareRooms() ){
+            ) {
+                if ($this->shareRooms()) {
                     //Search for another host if the current is not available for the new start_time and duration
-                    if( !$host = MeetingRoom::findAvailable($meeting->start_time, $meeting->end_time)){
+                    if (! $host = MeetingRoom::findAvailable($meeting->start_time, $meeting->end_time)) {
                         throw NoZoomRoomAvailable::createFromModel($meeting);
                     }
                     $meeting->updateHost($host);
@@ -84,7 +83,7 @@ trait InteractsWithMeetings
 
                 //Create a new zoom meeting hosted by the new user (room)
                 $zoomMeeting = $this->createZoomMeeting(
-                    $meeting->host->uuid, 
+                    $meeting->host->uuid,
                     $meeting->topic,
                     $meeting->start_time,
                     $meeting->duration
@@ -93,15 +92,14 @@ trait InteractsWithMeetings
                 //Update the zoom id referente and register the participants in the new zoom meeting
                 $meeting->setMeta('zoom_id')->asInteger($zoomMeeting->id);
 
-                $meeting->participantsPivot->each(function($participant) use($meeting){
+                $meeting->participantsPivot->each(function ($participant) use ($meeting) {
                     $meeting->cancelParticipation($participant->participant);
                     $meeting->addParticipant($participant->participant);
                 });
 
                 //Delete the original zoom meeting
                 $this->api->deleteMeeting($originalZoomMeetingId);
-
-            }else{
+            } else {
                 //Update the zoom meeting without changing user (room)
                 $this->updateZoomMeeting(
                     $meeting->meta->zoom_id,
@@ -109,7 +107,6 @@ trait InteractsWithMeetings
                     $meeting->start_time,
                     $meeting->duration
                 );
-
             }
         }
     }
@@ -133,7 +130,6 @@ trait InteractsWithMeetings
      */
     public function starting(Meeting $meeting): void
     {
-        
     }
 
     /**
@@ -144,7 +140,6 @@ trait InteractsWithMeetings
      */
     public function started(Meeting $meeting): void
     {
-        
     }
 
     /**
@@ -155,7 +150,6 @@ trait InteractsWithMeetings
      */
     public function ending(Meeting $meeting): void
     {
-        
     }
 
     /**
@@ -166,7 +160,6 @@ trait InteractsWithMeetings
      */
     public function ended(Meeting $meeting): void
     {
-        
     }
 
     /**
@@ -191,19 +184,19 @@ trait InteractsWithMeetings
         event(new MeetingCanceled($meeting));
     }
 
-   /**
-    * Undocumented function
-    *
-    * @param \Nncodes\Meeting\Contracts\Participant $participant
-    * @param \Nncodes\Meeting\Models\Meeting $meeting
-    * @param string $uuid
-    * @return void
-    */
+    /**
+     * Undocumented function
+     *
+     * @param \Nncodes\Meeting\Contracts\Participant $participant
+     * @param \Nncodes\Meeting\Models\Meeting $meeting
+     * @param string $uuid
+     * @return void
+     */
     public function participantAdding(Participant $participant, Meeting $meeting, string $uuid): void
     {
         $registrant = $this->api->addMeetingParticipant($meeting->meta->zoom_id, [
             'email' => $participant->email,
-            'first_name' => $participant->name
+            'first_name' => $participant->name,
         ]);
 
         $meeting->setMeta($uuid)->asObject($registrant);
@@ -216,9 +209,8 @@ trait InteractsWithMeetings
      * @return void
      */
     public function participantAdded(ParticipantPivot $participant): void
-    {       
-        if($details =  $participant->meeting->getMetaValue($participant->uuid)){
-
+    {
+        if ($details = $participant->meeting->getMetaValue($participant->uuid)) {
             $participant->setMeta('registrantId')->asString($details->registrantId);
             $participant->setMeta('joinUrl')->asString($details->joinUrl);
             $participant->setMeta('email')->asString($participant->participant->email);
@@ -244,7 +236,7 @@ trait InteractsWithMeetings
 
         $this->api->updateMeetingParticipantStatus($participant->meeting->meta->zoom_id, [
             'action' => 'cancel',
-            'registrants' => [$registrant]
+            'registrants' => [$registrant],
         ]);
 
         $participant->clearMetas();
@@ -269,7 +261,6 @@ trait InteractsWithMeetings
      */
     public function participantJoining(ParticipantPivot $participant): void
     {
-        
     }
 
     /**
@@ -280,7 +271,6 @@ trait InteractsWithMeetings
      */
     public function participantJoined(ParticipantPivot $participant): void
     {
-        
     }
 
     /**
@@ -291,7 +281,6 @@ trait InteractsWithMeetings
      */
     public function participantLeaving(ParticipantPivot $participant): void
     {
-        
     }
 
     /**
@@ -302,6 +291,5 @@ trait InteractsWithMeetings
      */
     public function participantLeft(ParticipantPivot $participant): void
     {
-        
     }
 }

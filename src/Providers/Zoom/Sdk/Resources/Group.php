@@ -56,7 +56,7 @@ class Group extends Resource
 
     /**
      * Delete a group member
-     * 
+     *
      * @param string $memberId Member Id.
      * @return void
      */
@@ -64,7 +64,6 @@ class Group extends Resource
     {
         $this->zoom->deleteMember($this->id, $memberId);
     }
-
 
     /**
      * List the members of the group.

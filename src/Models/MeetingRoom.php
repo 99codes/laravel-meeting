@@ -9,8 +9,8 @@ use Nncodes\Meeting\Contracts\Host;
 
 class MeetingRoom extends Model implements Host
 {
-    use SoftDeletes,
-        HostsMeetings;
+    use SoftDeletes;
+    use HostsMeetings;
     
     /**
      * The attributes that are mass assignable.

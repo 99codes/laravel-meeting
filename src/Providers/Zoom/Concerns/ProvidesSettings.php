@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Nncodes\Meeting\Providers\Zoom\Concerns;
 
@@ -7,7 +7,7 @@ trait ProvidesSettings
     /**
      * Undocumented function
      *
-     * @return boolean
+     * @return bool
      */
     public function shareRooms(): bool
     {

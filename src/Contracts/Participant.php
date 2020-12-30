@@ -60,15 +60,15 @@ interface Participant
      */
     public function scopeAvailableBetween(Builder $query, Carbon $start, Carbon $end, ?Meeting $except = null): Builder;
 
-   /**
-    * Undocumented function
-    *
-    * @param \Illuminate\Database\Eloquent\Builder $query
-    * @param \Carbon\Carbon $start
-    * @param \Carbon\Carbon $end
-    * @param \Nncodes\Meeting\Models\Meeting|null $except
-    * @return \Illuminate\Database\Eloquent\Builder
-    */
+    /**
+     * Undocumented function
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param \Carbon\Carbon $start
+     * @param \Carbon\Carbon $end
+     * @param \Nncodes\Meeting\Models\Meeting|null $except
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function scopeBusyBetween(Builder $query, Carbon $start, Carbon $end, ?Meeting $except = null): Builder;
 
     /**
@@ -77,7 +77,7 @@ interface Participant
     * @param \Carbon\Carbon $start
     * @param \Carbon\Carbon $end
     * @param \Nncodes\Meeting\Models\Meeting|null $except
-    * @return boolean
+    * @return bool
     */
     public function isAvailableBetween(Carbon $start, Carbon $end, ?Meeting $except = null): bool;
 
@@ -87,7 +87,7 @@ interface Participant
      * @param \Carbon\Carbon $start
      * @param \Carbon\Carbon $end
      * @param \Nncodes\Meeting\Models\Meeting|null $except
-     * @return boolean
+     * @return bool
      */
     public function isBusyBetween(Carbon $start, Carbon $end, ?Meeting $except = null): bool;
 }

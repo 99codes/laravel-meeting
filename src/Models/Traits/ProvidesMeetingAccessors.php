@@ -32,6 +32,7 @@ trait ProvidesMeetingAccessors
     public function getEndTimeAttribute(): Carbon
     {
         $startTime = clone $this->start_time;
+
         return $startTime->addMinutes($this->duration);
     }
 
@@ -44,6 +45,7 @@ trait ProvidesMeetingAccessors
     {
         if ($this->started_at) {
             $endedAt = $this->ended_at ?: now();
+
             return $this->started_at->diffInMinutes($endedAt);
         }
 
