@@ -422,11 +422,7 @@ scoping by `scheduled` status and where `start_time` is past. Queries the late t
 $query->late();
 ```
 
-<<<<<<< HEAD
 scoping by `live` status and where `started_at` + `duration` is past. Queries the meetings that had exceeded the scheduled duration.
-=======
-scoping by `live` status and where `started_at` + `duration` is past. Queries the meetings tath had exceeded the scheduled duration.
->>>>>>> 7b0bc83332353653c055a39ac3f43bf69f93692c
 ```php
 $query->exceeded();
 ```
