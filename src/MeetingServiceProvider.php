@@ -31,6 +31,7 @@ class MeetingServiceProvider extends ServiceProvider
 
             $this->commands([
                 Providers\Zoom\Commands\SyncUsersCommand::class,
+                Providers\Zoom\Commands\InstallCommand::class,
             ]);
         }
 
