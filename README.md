@@ -16,6 +16,11 @@
     - [Participant](#participant)
 - [Scheduling a meeting](#scheduling-a-meeting)
 - [Retrieving meetings](#retrieving-meetings)
+    - [Eloquent scopes](#eloquent-scopes)
+- [Handling a scheduled meeting](#handling-a-scheduled-meeting)
+    - [Meeting](#meeting)
+    - [Participants](#participants)
+    - [Hosts](#hosts)
 - [Contributing](#contributing)
 - [Security Vulnerabilities](#security-vulnerabilities)
 - [License](#license)
@@ -382,7 +387,7 @@ $query = Student::find(1)->meetings();
 
 ### Eloquent scopes
 
-#### General scopes
+**General scopes**
 
 scoping by `uuid`, e.g `b33cac3a-c8da-4b33-a296-30a6acff5af6`.
 ```php
@@ -399,7 +404,7 @@ scoping by provider, e.g. `zoom`.
 $query->provider('zoom');
 ```
 
-#### Scopes for `start_time`, `started_at` and `ended_at`
+**Scopes for `start_time`, `started_at` and `ended_at`**
 
 scoping by start time from, e.g. `15 days ago`.
 ```php
@@ -454,7 +459,7 @@ scoping by `last` status ordering by `ended_at` desc queries the last meetings
 $query->last();
 ```
 
-#### Scope for actors
+**Scopes for actors**
 
 scoping by scheduler, e.g. `App\Models\Event` with `id:1`.
 ```php
@@ -476,7 +481,7 @@ scoping by presenter, e.g. `App\Models\Teacher` with `id:1`.
 $query->presenter(Teacher::find(1));
 ```
 
-And finally to retrieve the data you can call any eloquent retriever method, e.g. `count`, `first`, `get`, `paginate` and etc.
+Finally to retrieve the data you can call any eloquent retriever method, e.g. `count`, `first`, `get`, `paginate` and etc.
 
 
 ## Handling a scheduled meeting
