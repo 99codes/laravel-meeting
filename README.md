@@ -363,7 +363,7 @@ Scoping meetings from participant model, e.g. `App\Models\Student` with `id:1`.
 $query = Student::find(1)->meetings();
 ```
 
-### And then use the eloquent scope methods available
+### Meeting model scopes
 
 #### General scopes
 
@@ -417,12 +417,22 @@ scoping by status `scheduled`, the not started meetings.
 $query->scheduled();
 ```
 
-scoping by `scheduled` status ordering by `start_time` asc.
+scoping by `scheduled` status and where `start_time` is past. Queries the late to start meetings.
+```php
+$query->late();
+```
+
+scoping by `live` status and where `started_at` + `duration` is past. Queries the meetings that had exceeded the scheduled duration.
+```php
+$query->exceeded();
+```
+
+scoping by `scheduled` status ordering by `start_time` asc. Queries the next neetings
 ```php
 $query->next();
 ```
 
-scoping by `last` status ordering by `ended_at` desc.
+scoping by `last` status ordering by `ended_at` desc queries the last meetings
 ```php
 $query->last();
 ```
