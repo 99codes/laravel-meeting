@@ -214,7 +214,7 @@ trait InteractsWithMeetings
         if ($details = $participant->meeting->getMetaValue($participant->uuid)) {
             $participant->setMeta('registrantId')->asString($details->registrantId);
             $participant->setMeta('joinUrl')->asString($details->joinUrl);
-            $participant->setMeta('email')->asString($participant->participant->email);
+            $participant->setMeta('email')->asString($participant->participant->getParticipantEmailAddress());
             
             $participant->meeting->forgetMeta($participant->uuid);
         }
