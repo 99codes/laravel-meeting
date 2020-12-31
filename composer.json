@@ -1,6 +1,6 @@
 {
     "name": "nncodes/laravel-meeting",
-    "description": "Handle any kind of meeting with Laravel",
+    "description": "Handle online meeting with Laravel",
     "keywords": [
         "nncodes",
         "laravel-meeting"
