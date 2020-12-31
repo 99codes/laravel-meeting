@@ -41,8 +41,8 @@ The package will automatically register itself.
 You can publish and run the migrations with:
 
 ```bash
-php artisan vendor:publish --provider="Nncodes\MetaAttributes\MetaAttributesServiceProvider" --tag="migrations"
 php artisan vendor:publish --provider="Nncodes\Meeting\MeetingServiceProvider" --tag="migrations"
+php artisan vendor:publish --provider="Nncodes\MetaAttributes\MetaAttributesServiceProvider" --tag="migrations"
 ```
 
 After the migration has been published you can create the tables by running the migrations:
@@ -501,7 +501,8 @@ Meeting::find(1)->cancel();
 
 Adding a participant by `Nncodes\Meeting\Models\Meeting`
 ```php
-Meeting::find(1)->start();
+$student = Student::find(1);
+Meeting::find(1)->addParticipant($student);
 ```
 
 Adding a participant by participant model `App\Models\Student`
