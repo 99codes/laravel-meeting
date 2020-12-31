@@ -183,14 +183,15 @@ trait ManipulatesMeeting
     /**
      * Undocumented function
      *
-     * @return \Nncodes\Meeting\Models\Participant: null
+     * @return \Nncodes\Meeting\Models\Participant|null
      */
     public function getNextParticipant(): ?ParticipantPivot
     {
         return $this->participantsPivot()
                     ->whereNull('started_at')
                     ->whereNull('ended_at')
-                    ->orderBy('created_at', 'desc');
+                    ->orderBy('created_at', 'desc')
+                    ->first();
     }
 
     /**
