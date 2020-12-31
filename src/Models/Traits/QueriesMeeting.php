@@ -24,7 +24,7 @@ trait QueriesMeeting
      */
     public function scopeByUuid(Builder $query, string $uuid): Builder
     {
-        return $query->where($this->getTable() . 'uuid', $uuid);
+        return $query->where($this->getTable() . '.uuid', $uuid);
     }
 
     /**
@@ -51,7 +51,7 @@ trait QueriesMeeting
         return $query->whereHasMorph(
             'scheduler',
             get_class($scheduler),
-            fn (Builder $query) => $query->where($this->getTable() . '.id', $scheduler->id)
+            fn (Builder $query) => $query->where('id', $scheduler->id)
         );
     }
 
@@ -67,7 +67,7 @@ trait QueriesMeeting
         return $query->whereHasMorph(
             'presenter',
             get_class($presenter),
-            fn (Builder $query) => $query->where($this->getTable() . '.id', $presenter->id)
+            fn (Builder $query) => $query->where('id', $presenter->id)
         );
     }
 
@@ -83,7 +83,7 @@ trait QueriesMeeting
         return $query->whereHasMorph(
             'host',
             get_class($host),
-            fn (Builder $query) => $query->where($this->getTable() . '.id', $host->id)
+            fn (Builder $query) => $query->where('id', $host->id)
         );
     }
 
@@ -186,6 +186,32 @@ trait QueriesMeeting
     public function scopeScheduled(Builder $query): Builder
     {
         return $query->whereNull([$this->getTable() . '.started_at', $this->getTable() . '.ended_at']);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeLate(Builder $query): Builder
+    {
+        return $query->scheduled()->whereDate('start_time', '<', now()->format('Y-m-d H:i:s'));
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeExceeded(Builder $query): Builder
+    {
+        return $query->live()->where(
+            DB::raw('DATE_ADD('.$this->getTable().'.started_at, INTERVAL '.$this->getTable().'.duration MINUTE)'),
+            '<',
+            now()->format('Y-m-d H:i:s')
+        );
     }
 
     /**
