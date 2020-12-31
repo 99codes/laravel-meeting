@@ -1,7 +1,24 @@
 # Laravel Meeting
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/nncodes/laravel-meeting.svg?style=flat-square)](https://packagist.org/packages/nncodes/laravel-meeting)
+[![Latest Version on Packagist](https://img.shields.io/packagist/l/nncodes/laravel-meeting.svg?style=flat-square)](https://packagist.org/packages/nncodes/laravel-meeting)
 [![Total Downloads](https://img.shields.io/packagist/dt/nncodes/laravel-meeting.svg?style=flat-square)](https://packagist.org/packages/nncodes/laravel-meeting)
+
+## Official Documentation
+
+- [Introduction](#introduction)
+- [Requirements](#requirements)
+- [Installation & setup](#installation-setup)
+- [Preparing your models](#preparing-your-models)
+    - [Scheduler](#scheduler)
+    - [Presenter](#presenter)
+    - [Host](#host)
+    - [Participant](#participant)
+- [Scheduling a meeting](#scheduling-a-meeting)
+- [Retrieving meetings](#retrieving-meetings)
+- [Contributing](#contributing)
+- [Security Vulnerabilities](#security-vulnerabilities)
+- [License](#license)
 
 ## Introduction
 
@@ -332,16 +349,16 @@ Meeting::find(1)>getParticipantAccess($student);
 
 More: [handling a scheduled meeting](#handling-a-scheduled-meeting).
 
-## Retrieving meetings using scoped queries
+## Retrieving meetings
 
-### You can just call from the meeting model
+**You can just call from the meeting model:**
 
 Scoping meetings by `Nncodes\Meeting\Models\Meeting`.
 ```php
 $query = Meeting::query();
 ```
 
-### Or call `meetings()` from any actor:
+**or call `meetings()` from any actor:**
 
 Scoping meetings from scheduler model, e.g. `App\Models\Event` with `id:1`.
 ```php
@@ -363,7 +380,7 @@ Scoping meetings from participant model, e.g. `App\Models\Student` with `id:1`.
 $query = Student::find(1)->meetings();
 ```
 
-### Meeting model scopes
+### Eloquent scopes
 
 #### General scopes
 
