@@ -68,9 +68,7 @@ trait InteractsWithMeetings
     public function updating(Meeting $meeting): void
     {
         if ($meeting->isDirty()) {
-
             if ($meeting->isDirty('start_time')) {
-
                 if ($this->shareRooms() && $meeting->host->isBusyBetween($meeting->start_time, $meeting->end_time, $meeting)) {
                     //Search for another host if the current is not available for the new start_time and duration
                     if (! $host = MeetingRoom::findAvailable($meeting->start_time, $meeting->end_time)) {
@@ -78,12 +76,10 @@ trait InteractsWithMeetings
                     }
                     $meeting->updateHost($host);
                 }
-                
-            } 
+            }
 
             //If the host was changed, create a new zoom meeting and delete the previous one.
-            if($meeting->isDirty('host_id')){
-
+            if ($meeting->isDirty('host_id')) {
                 $originalZoomMeetingId = $meeting->getMetaValue('zoom_id');
 
                 //Create a new zoom meeting hosted by the new user (room)
@@ -104,8 +100,7 @@ trait InteractsWithMeetings
 
                 //Delete the original zoom meeting
                 $this->api->deleteMeeting($originalZoomMeetingId);
-
-            }else{
+            } else {
 
                 //Update the zoom meeting without changing user (room)
                 $this->updateZoomMeeting(
