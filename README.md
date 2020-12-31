@@ -1,7 +1,7 @@
 # Laravel Meeting
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/nncodes/laravel-meeting.svg?style=flat-square)](https://packagist.org/packages/nncodes/laravel-meeting)
-[![Latest Version on Packagist](https://img.shields.io/packagist/l/nncodes/laravel-meeting.svg?style=flat-square)](https://packagist.org/packages/nncodes/laravel-meeting)
+[![License](https://img.shields.io/packagist/l/laravel/forge-sdk?style=flat-square)](https://packagist.org/packages/nncodes/laravel-meeting)
 [![Total Downloads](https://img.shields.io/packagist/dt/nncodes/laravel-meeting.svg?style=flat-square)](https://packagist.org/packages/nncodes/laravel-meeting)
 
 ## Official Documentation
