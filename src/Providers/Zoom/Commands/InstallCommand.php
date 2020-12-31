@@ -29,18 +29,18 @@ class InstallCommand extends Command
     {
         $this->call('vendor:publish', [
             '--provider' => 'Nncodes\Meeting\MeetingServiceProvider',
-            '--tag' => 'migrations'
+            '--tag' => 'migrations',
         ]);
 
         $this->call('vendor:publish', [
             '--provider' => 'Nncodes\MetaAttributes\MetaAttributesServiceProvider',
-            '--tag' => 'migrations'
+            '--tag' => 'migrations',
         ]);
 
-        if($this->option('config')){
+        if ($this->option('config')) {
             $this->call('vendor:publish', [
                 '--provider' => 'Nncodes\Meeting\MeetingServiceProvider',
-                '--tag' => 'config'
+                '--tag' => 'config',
             ]);
         }
     }
