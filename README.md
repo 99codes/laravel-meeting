@@ -61,7 +61,7 @@ composer require nncodes/laravel-meeting
 
 The package will automatically register itself.
 
-You can use the `meeting:install` command to publish the migrations and use `--config` if you also want toublish the config file.
+You can use the `meeting:install` command to publish the migrations and use `--config` if you also want to publish the config file.
 
 ```bash
 php artisan meeting:install --config
