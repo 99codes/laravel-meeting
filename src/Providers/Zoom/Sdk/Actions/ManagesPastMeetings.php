@@ -27,11 +27,13 @@ trait ManagesPastMeetings
      */
     public function pastMeetingParticipants(int $meetingId, array $query = []): Repository
     {
-        $request = fn ($query, $paginator) => $this->transformCollection(
-            $this->get("past_meetings/{$meetingId}/participants?".http_build_query($query)),
+        $request = function ($query, $paginator) use ($meetingId, $query) {
+          return $this->transformCollection(
+            $this->get("past_meetings/{$meetingId}/participants?" . http_build_query($query)),
             [MeetingParticipant::class, 'participants'],
             $paginator
-        );
+          );
+        };
 
         return $request($query, $request);
     }

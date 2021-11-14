@@ -11,9 +11,9 @@ class ZoomProvider implements Provider
     use Concerns\InteractsWithMeetings;
 
     /**
-     * @var Zoom
+     * @var Sdk\Zoom
      */
-    protected Sdk\Zoom $api;
+    protected $api;
 
     /**
      * Undocumented function

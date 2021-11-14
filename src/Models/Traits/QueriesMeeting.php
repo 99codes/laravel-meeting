@@ -51,7 +51,9 @@ trait QueriesMeeting
         return $query->whereHasMorph(
             'scheduler',
             get_class($scheduler),
-            fn (Builder $query) => $query->where('id', $scheduler->id)
+            function (Builder $query) use ($scheduler) {
+              return $query->where('id', $scheduler->id);
+            }
         );
     }
 
@@ -67,7 +69,9 @@ trait QueriesMeeting
         return $query->whereHasMorph(
             'presenter',
             get_class($presenter),
-            fn (Builder $query) => $query->where('id', $presenter->id)
+            function (Builder $query) use ($presenter) {
+              return $query->where('id', $presenter->id);
+            }
         );
     }
 
@@ -83,7 +87,9 @@ trait QueriesMeeting
         return $query->whereHasMorph(
             'host',
             get_class($host),
-            fn (Builder $query) => $query->where('id', $host->id)
+            function (Builder $query) use ($host) {
+              return $query->where('id', $host->id);
+            }
         );
     }
 
@@ -98,9 +104,11 @@ trait QueriesMeeting
     {
         return $query->whereHas(
             'participantsPivot',
-            fn (Builder $query) => $query->where([
+            function (Builder $query) use ($participant) {
+              return $query->where([
                 'participant_id' => $participant->id,
-            ])
+              ]);
+            }
         );
     }
 

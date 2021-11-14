@@ -125,11 +125,13 @@ trait ManagesUsers
      */
     public function userMeetings(string $userId, array $query = []): Repository
     {
-        $request = fn ($query, $paginator) => $this->transformCollection(
+        $request = function ($query, $paginator) use ($userId, $query) {
+          return $this->transformCollection(
             $this->get("users/{$userId}/meetings?".http_build_query($query)),
             [Meeting::class, 'meetings'],
             $paginator
-        );
+          );
+        };
 
         return $request($query, $request);
     }
@@ -154,11 +156,13 @@ trait ManagesUsers
      */
     public function userRecordings(string $userId, array $query = []): Repository
     {
-        $request = fn ($query, $paginator) => $this->transformCollection(
-            $this->get("users/{$userId}/recordings?".http_build_query($query)),
+        $request = function ($query, $paginator) use ($userId, $query) {
+          return $this->transformCollection(
+            $this->get("users/{$userId}/recordings?" . http_build_query($query)),
             [CloudRecording::class, 'meetings'],
             $paginator
-        );
+          );
+        };
 
         return $request($query, $request);
     }
@@ -171,11 +175,13 @@ trait ManagesUsers
      */
     public function users(array $query = []): Repository
     {
-        $request = fn ($query, $paginator) => $this->transformCollection(
-            $this->get("users?".http_build_query($query)),
+        $request = function ($query, $paginator) use ($query) {
+          return $this->transformCollection(
+            $this->get("users?" . http_build_query($query)),
             [User::class, 'users'],
             $paginator
-        );
+          );
+        };
 
         return $request($query, $request);
     }

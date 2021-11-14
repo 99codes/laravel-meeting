@@ -29,10 +29,14 @@ trait VerifiesAvailability
 
             $query->where(function ($query) use ($start, $end, $except) {
                 $query->where(
-                    fn ($q) => $q->startsBetween($start, $end)
+                    function ($q) use ($start, $end) {
+                      return $q->startsBetween($start, $end);
+                    }
                 )
                 ->orWhere(
-                    fn ($q) => $q->endsBetween($start, $end)
+                    function ($q) use ($start, $end) {
+                      return $q->endsBetween($start, $end);
+                    }
                 );
             });
         });
@@ -56,10 +60,14 @@ trait VerifiesAvailability
 
             $query->where(function ($query) use ($start, $end, $except) {
                 $query->where(
-                    fn ($q) => $q->startsBetween($start, $end)
+                    function ($q) use ($start, $end) {
+                      return $q->startsBetween($start, $end);
+                    }
                 )
                 ->orWhere(
-                    fn ($q) => $q->endsBetween($start, $end)
+                    function ($q) use ($start, $end) {
+                      return $q->endsBetween($start, $end);
+                    }
                 );
             });
         });

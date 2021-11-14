@@ -63,7 +63,9 @@ class Zoom
         }
 
         $resources = array_map(
-            fn ($data) => new $class($data, $this),
+            function ($data) use ($class) {
+              return new $class($data, $this);
+            },
             $collectionData
         );
 
